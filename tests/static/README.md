@@ -32,11 +32,36 @@ All tests passing:
 
 ## Running Tests
 ```bash
-# Run all StaticLand tests
+# Run StaticLand tests specifically
 npm run test:static
 
-# Run all tests
+# Run all tests (all sites)
 npm run test
+
+# View StaticLand test report
+npm run test:report:static
+
+# View combined test report (all sites)
+npm run test:report
+```
+
+## Test Output Structure
+```
+tests/
+├── static/
+│   ├── pages.spec.ts     # Test files
+│   ├── README.md         # This documentation
+│   └── result/           # Test results (git ignored)
+│       ├── traces/
+│       ├── screenshots/
+│       └── videos/
+└── (future sites)/
+    ├── dynamic/
+    │   └── result/       # DynamicMaze test results
+    ├── client-only/
+    │   └── result/       # ClientShadow test results
+    └── anti-bot/
+        └── result/       # BotWarden test results
 ```
 
 ## Test Framework

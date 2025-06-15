@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "playwright test",
-    "test:static": "playwright test tests/static/"
+    "test:static": "playwright test --project=static-land",
+    "test:report": "npx playwright show-report",
+    "test:report:static": "npx playwright show-report tests/static/result/"
   },
   "dependencies": {
     "next": "15.3.3",

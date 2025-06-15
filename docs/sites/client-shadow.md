@@ -1,35 +1,35 @@
 # ClientShadow
 
-**Purpose:** Simulates JavaScript-only rendering. Pages appear empty in HTML and populate content client-side.
+**目的:** JavaScript専用レンダリングをシミュレート。ページはHTMLで空に表示され、クライアント側でコンテンツを生成する。
 
-**Model:** Single Page Applications (SPAs), Next.js CSR-only setups
+**モデル:** シングルページアプリケーション（SPA）、Next.js CSR専用セットアップ
 
-**Route:** `/client-only`
+**ルート:** `/client-only`
 
-## Structure
+## 構造
 
 ```
-/client-only               ← Top page
-/client-only/profile/[id] ← User profiles (at least 25+)
+/client-only               ← トップページ
+/client-only/profile/[id] ← ユーザープロファイル（最低25ページ以上）
 ```
 
-## Key Features
+## 主要機能
 
-- Initial HTML is blank or placeholder only
-- All content rendered via `useEffect`
-- Hydration-only structure
-- No server-side markup
-- Internal navigation dynamically injected
+- 初期HTMLは空白またはプレースホルダーのみ
+- すべてのコンテンツは`useEffect`を通じてレンダリング
+- ハイドレーション専用構造
+- サーバーサイドマークアップなし
+- 内部ナビゲーションは動的に注入
 
 ## Sitemap/Robots
 
-- `sitemap.xml`: available but content mismatch
-- `robots.txt`: undefined
+- `sitemap.xml`: 利用可能だがコンテンツミスマッチ
+- `robots.txt`: 未定義
 
-## Crawler Tests
+## クローラーテスト
 
-- JavaScript execution ability
-- Visibility of client-injected elements
-- JS-only routes, link injection
+- JavaScript実行能力
+- クライアント注入要素の可視性
+- JS専用ルート、リンク注入
 
-**Minimum Pages:** 25+
+**最小ページ数:** 25ページ以上

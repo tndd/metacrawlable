@@ -1,33 +1,33 @@
-# Project Structure
+# プロジェクト構造
 
-## Documentation Structure
+## ドキュメント構造
 
-This repository contains documentation and specifications for the MetaCrawlable project:
+このリポジトリには、MetaCrawlableプロジェクトのドキュメントと仕様が含まれています：
 
 ```
 .
-├── README.md                    # Main project overview
+├── README.md                    # メインプロジェクト概要
 ├── docs/
-│   ├── overview.md             # Project purpose and goals
-│   ├── structure.md            # This file - project structure
-│   ├── anti-crawler.md         # Anti-crawler mechanisms
-│   ├── sitemap-robots.md       # Sitemap and robots.txt rules
-│   └── sites/                  # Individual site specifications
-│       ├── static-land.md      # StaticLand specifications
-│       ├── dynamic-maze.md     # DynamicMaze specifications
-│       ├── client-shadow.md    # ClientShadow specifications
-│       ├── map-town.md         # MapTown specifications
-│       ├── bot-warden.md       # BotWarden specifications
-│       ├── link-spiral.md      # LinkSpiral specifications
-│       ├── broken-web.md       # BrokenWeb specifications
-│       ├── meta-lie.md         # MetaLie specifications
-│       ├── no-map-zone.md      # NoMapZone specifications
-│       └── half-map-site.md    # HalfMapSite specifications
+│   ├── overview.md             # プロジェクトの目的と目標
+│   ├── structure.md            # このファイル - プロジェクト構造
+│   ├── anti-crawler.md         # アンチクローラー機構
+│   ├── sitemap-robots.md       # サイトマップとrobots.txtルール
+│   └── sites/                  # 個別サイト仕様
+│       ├── static-land.md      # StaticLand仕様
+│       ├── dynamic-maze.md     # DynamicMaze仕様
+│       ├── client-shadow.md    # ClientShadow仕様
+│       ├── map-town.md         # MapTown仕様
+│       ├── bot-warden.md       # BotWarden仕様
+│       ├── link-spiral.md      # LinkSpiral仕様
+│       ├── broken-web.md       # BrokenWeb仕様
+│       ├── meta-lie.md         # MetaLie仕様
+│       ├── no-map-zone.md      # NoMapZone仕様
+│       └── half-map-site.md    # HalfMapSite仕様
 ```
 
-## Implementation Structure
+## 実装構造
 
-The Next.js implementation should follow this structure:
+Next.js実装は以下の構造に従うべきです：
 
 ```
 your-project/
@@ -43,30 +43,30 @@ your-project/
 │   ├── no-sitemap/
 │   ├── partial-map/
 │   └── layout.tsx
-├── middleware.ts         # Required for anti-bot User-Agent detection
+├── middleware.ts         # アンチボットUser-Agent検出に必要
 ├── public/
-│   ├── robots.txt         # Multiple versions may be conditionally served
-│   └── sitemap.xml        # Must include both complete and corrupted examples
-├── next.config.js         # May include rewrites and middleware conditions
+│   ├── robots.txt         # 複数バージョンが条件付きで提供される場合がある
+│   └── sitemap.xml        # 完全版と破損版の両方を含む必要がある
+├── next.config.js         # リライトとミドルウェア条件を含む場合がある
 ├── tsconfig.json
 └── package.json
 ```
 
-## Mock Site Summary
+## モックサイトの概要
 
-Each subdirectory under `app/` represents a **mock site**. These are not pages, but full adversarial test environments. Each must include a `page.tsx` file and conform to the following specifications:
+`app/`配下の各サブディレクトリは**モックサイト**を表します。これらはページではなく、完全な敵対的テスト環境です。各サイトは`page.tsx`ファイルを含み、以下の仕様に準拠する必要があります：
 
-| Site Name      | Route Path     | Required Behavior                                                               |
+| サイト名        | ルートパス      | 必要な動作                                                                        |
 | -------------- | -------------- | ------------------------------------------------------------------------------- |
-| `StaticLand`   | `/static`      | Plain HTML site with hardcoded internal links. Fully crawlable without JS.      |
-| `DynamicMaze`  | `/dynamic`     | Uses `getServerSideProps()` to randomize content on each request.               |
-| `ClientShadow` | `/client-only` | Initial HTML is empty. Content appears **only after JavaScript execution**.     |
-| `MapTown`      | `/map`         | Displays a map via Google Maps or OpenStreetMap JS API. Hidden without JS.      |
-| `BotWarden`    | `/anti-bot`    | Middleware blocks or alters response for specific User-Agents.                  |
-| `LinkSpiral`   | `/trap/[slug]` | Generates recursive links dynamically. Infinite depth possible.                 |
-| `BrokenWeb`    | `/trap-broken` | Pages referenced in sitemap do not exist or return 404.                         |
-| `MetaLie`      | `/meta-fake`   | Meta title and description differ from visible content.                         |
-| `NoMapZone`    | `/no-sitemap`  | Neither sitemap.xml nor robots.txt is served. Site must be discovered manually. |
-| `HalfMapSite`  | `/partial-map` | Sitemap.xml exists but omits many live pages. Misleads crawling heuristics.     |
+| `StaticLand`   | `/static`      | ハードコードされた内部リンクを持つプレーンHTMLサイト。JSなしで完全クロール可能。     |
+| `DynamicMaze`  | `/dynamic`     | リクエストごとにコンテンツをランダム化するために`getServerSideProps()`を使用。     |
+| `ClientShadow` | `/client-only` | 初期HTMLは空。コンテンツは**JavaScript実行後のみ**表示される。                   |
+| `MapTown`      | `/map`         | Google MapsまたはOpenStreetMap JS APIを使用してマップを表示。JSなしでは非表示。  |
+| `BotWarden`    | `/anti-bot`    | ミドルウェアが特定のUser-Agentに対してレスポンスをブロックまたは変更。            |
+| `LinkSpiral`   | `/trap/[slug]` | 再帰的リンクを動的に生成。無限の深度が可能。                                     |
+| `BrokenWeb`    | `/trap-broken` | サイトマップで参照されるページが存在しないか404を返す。                          |
+| `MetaLie`      | `/meta-fake`   | メタタイトルと説明が表示されるコンテンツと異なる。                               |
+| `NoMapZone`    | `/no-sitemap`  | sitemap.xmlもrobots.txtも提供されない。サイトは手動で発見する必要がある。        |
+| `HalfMapSite`  | `/partial-map` | sitemap.xmlは存在するが多くのライブページを省略。クローリングヒューリスティックを誤解させる。 |
 
-Each of the above sites **must be implemented completely** and serve distinguishable HTML structures for testing parser adaptability.
+上記の各サイトは**完全に実装されなければならず**、パーサーの適応性をテストするために識別可能なHTML構造を提供する必要があります。

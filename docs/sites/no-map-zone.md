@@ -1,30 +1,30 @@
 # NoMapZone
 
-**Purpose:** Has no sitemap or robots.txt, only reachable through in-site link discovery.
+**目的:** サイトマップやrobots.txtがなく、サイト内リンク発見によってのみ到達可能。
 
-**Model:** Hobbyist or legacy company pages
+**モデル:** 趣味や従来の企業ページ
 
-**Route:** `/no-sitemap`
+**ルート:** `/no-sitemap`
 
-## Structure
+## 構造
 
 ```
-/no-sitemap             ← Homepage
-/no-sitemap/pages/[id] ← Deeply linked pages (at least 40+)
+/no-sitemap             ← ホームページ
+/no-sitemap/pages/[id] ← 深くリンクされたページ（最低40ページ以上）
 ```
 
-## Key Features
+## 主要機能
 
-- Entire site reachable via internal links only
-- Multi-level structure, unclear nav paths
+- サイト全体が内部リンクのみで到達可能
+- 多層構造、不明確なナビゲーションパス
 
 ## Sitemap/Robots
 
-- None
+- なし
 
-## Crawler Tests
+## クローラーテスト
 
-- Full graph reconstruction from DOM only
-- Link-following accuracy
+- DOMのみからの完全なグラフ再構築
+- リンクフォローの精度
 
-**Minimum Pages:** 40+
+**最小ページ数:** 40ページ以上

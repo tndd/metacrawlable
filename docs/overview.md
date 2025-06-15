@@ -1,28 +1,28 @@
-# Project Overview
+# プロジェクト概要
 
-## Purpose
+## 目的
 
-**MetaCrawlable** is a testbed composed of multiple independent mock websites, all hosted under a single Next.js project (using the App Router structure). Each mock website is implemented as a self-contained route, simulating specific challenges that crawlers may face in real-world hostile web environments.
+**MetaCrawlable**は、複数の独立したモックWebサイトから構成されるテストベッドで、すべて単一のNext.jsプロジェクト（App Router構造を使用）でホストされます。各モックWebサイトは独立したルートとして実装され、実世界の敵対的なWeb環境でクローラーが遭遇する可能性がある特定の課題をシミュレートします。
 
-This includes, but is not limited to:
+これには以下が含まれますが、これらに限定されません：
 
-- Dynamic HTML content
-- JavaScript-only rendering
-- Sitemap inconsistencies
-- Meta tag misinformation
-- Robots.txt traps
-- Anti-bot middleware
+- 動的HTMLコンテンツ
+- JavaScript専用レンダリング
+- サイトマップの不整合
+- メタタグの誤情報
+- Robots.txtトラップ
+- アンチボットミドルウェア
 
-These are **not optional** features. Each one must be implemented faithfully and independently.
+これらは**オプション機能ではありません**。各機能は忠実かつ独立して実装される必要があります。
 
-## Goals
+## 目標
 
-1. Allow developers to locally test scrapers and crawlers without hitting real production sites.
-2. Provide realistic obstacles that represent common and advanced anti-crawling strategies.
-3. Function as a baseline for crawler robustness testing, ML-based scraping evaluation, and automated bot design.
+1. 開発者が実際の本番サイトにアクセスすることなく、スクレイパーやクローラーをローカルでテストできるようにする。
+2. 一般的で高度なアンチクローリング戦略を代表する現実的な障害を提供する。
+3. クローラーの堅牢性テスト、MLベースのスクレイピング評価、自動ボット設計のベースラインとして機能する。
 
-This project should be able to replicate or exceed the complexity of most real-world sites. If a crawler performs well here, it is expected to succeed in production.
+このプロジェクトは、ほとんどの実世界のサイトの複雑さを再現または上回ることができるべきです。ここでクローラーが良好に動作すれば、本番環境でも成功することが期待されます。
 
-## Development Instructions
+## 開発指示
 
-All instructions should be interpreted **literally and without assumption**. If any ambiguity is detected, halt processing and request clarification.
+すべての指示は**文字通りかつ推測なしに**解釈されるべきです。曖昧さが検出された場合は、処理を停止して明確化を要求してください。

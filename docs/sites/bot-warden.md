@@ -1,33 +1,33 @@
 # BotWarden
 
-**Purpose:** Evaluates crawler resilience against User-Agent blocking, header filtering, and IP-based traps.
+**目的:** User-Agentブロック、ヘッダーフィルタリング、IPベースのトラップに対するクローラーの回復力を評価。
 
-**Model:** Login portals, analytic systems, anti-bot strategies
+**モデル:** ログインポータル、分析システム、アンチボット戦略
 
-**Route:** `/anti-bot`
+**ルート:** `/anti-bot`
 
-## Structure
+## 構造
 
 ```
-/anti-bot                ← Homepage (different behavior per UA)
-/anti-bot/trap           ← Crawler-only trap page
+/anti-bot                ← ホームページ（UAごとに異なる動作）
+/anti-bot/trap           ← クローラー専用トラップページ
 ```
 
-## Key Features
+## 主要機能
 
-- Middleware blocks known bots via User-Agent, IP, Referrer
-- Sends 403 or deceptive HTML to bots
-- Redirects bots to dead-end loops
+- ミドルウェアがUser-Agent、IP、Referrerを通じて既知のボットをブロック
+- ボットに403または欺瞞的なHTMLを送信
+- ボットを袋小路ループにリダイレクト
 
 ## Sitemap/Robots
 
-- No sitemap
+- サイトマップなし
 - `robots.txt`: `Disallow: /anti-bot`
 
-## Crawler Tests
+## クローラーテスト
 
-- User-Agent spoofing
-- Middleware rejection handling
-- Trap link recognition
+- User-Agentスプーフィング
+- ミドルウェア拒否処理
+- トラップリンク認識
 
-**Minimum Pages:** 10+
+**最小ページ数:** 10ページ以上

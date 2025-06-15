@@ -1,34 +1,34 @@
 # MapTown
 
-**Purpose:** Tests visibility of embedded map data via third-party JS like Google Maps or Leaflet.
+**目的:** Google MapsやLeafletなどのサードパーティJSを通じた埋め込みマップデータの可視性をテスト。
 
-**Model:** Travel/realtor sites with maps and points of interest
+**モデル:** マップと関心地点を含む旅行/不動産サイト
 
-**Route:** `/map`
+**ルート:** `/map`
 
-## Structure
+## 構造
 
 ```
-/map                      ← Map-centered homepage
-/map/spot/[id]           ← Location detail pages (at least 15+)
+/map                      ← マップ中心のホームページ
+/map/spot/[id]           ← ロケーション詳細ページ（最低15ページ以上）
 ```
 
-## Key Features
+## 主要機能
 
-- Uses iframe or `<script>` to inject maps
-- Google Maps API or OpenStreetMap
-- Map-only points with no direct links
-- Maps require dummy keys or tokens
+- iframeまたは`<script>`を使用してマップを注入
+- Google Maps APIまたはOpenStreetMap
+- 直接リンクのないマップ専用ポイント
+- マップにはダミーキーまたはトークンが必要
 
 ## Sitemap/Robots
 
-- `sitemap.xml`: includes `/map/spot/**`
+- `sitemap.xml`: `/map/spot/**`を含む
 - `robots.txt`: `Allow`
 
-## Crawler Tests
+## クローラーテスト
 
-- Extraction of data from `<iframe>` or canvas
-- JS-injected content visibility
-- Non-link embedded POI discoverability
+- `<iframe>`またはcanvasからのデータ抽出
+- JS注入コンテンツの可視性
+- 非リンク埋め込みPOIの発見可能性
 
-**Minimum Pages:** 15+
+**最小ページ数:** 15ページ以上

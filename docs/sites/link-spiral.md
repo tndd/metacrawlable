@@ -1,31 +1,31 @@
 # LinkSpiral
 
-**Purpose:** Tests recursion handling and infinite-link scenarios.
+**目的:** 再帰処理と無限リンクシナリオをテスト。
 
-**Model:** CMSs with repeated profiles, infinite reply chains
+**モデル:** 重複プロファイル、無限返信チェーンを持つCMS
 
-**Route:** `/trap/[slug]`
+**ルート:** `/trap/[slug]`
 
-## Structure
+## 構造
 
 ```
-/trap/[slug]            ← Recursive links (at least 50+ slugs)
+/trap/[slug]            ← 再帰リンク（最低50スラッグ以上）
 ```
 
-## Key Features
+## 主要機能
 
-- Recursive links between pages
-- Loopbacks and redirects
-- Random paths linking back into structure
+- ページ間の再帰リンク
+- ループバックとリダイレクト
+- 構造内に戻るランダムパス
 
 ## Sitemap/Robots
 
-- Sitemap includes only part of total paths
-- `robots.txt`: undefined
+- サイトマップには全パスの一部のみ含まれる
+- `robots.txt`: 未定義
 
-## Crawler Tests
+## クローラーテスト
 
-- Infinite traversal protection
-- Loop detection and deduplication
+- 無限トラバーサル保護
+- ループ検出と重複除去
 
-**Minimum Pages:** 50+
+**最小ページ数:** 50ページ以上

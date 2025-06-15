@@ -1,40 +1,40 @@
 # StaticLand
 
-**Purpose:** A baseline testbed for evaluating crawler performance in semantically rich, fully static HTML environments. This confirms whether a crawler can parse standard markup and traverse internal links.
+**目的:** セマンティックに豊富で完全に静的なHTML環境でのクローラーパフォーマンスを評価するためのベースラインテストベッド。クローラーが標準的なマークアップを解析し、内部リンクを巡回できるかを確認する。
 
-**Real-world Model:** Static blogs using Jekyll, Hugo, GitHub Pages, etc.
+**実世界のモデル:** Jekyll、Hugo、GitHub Pagesなどを使用した静的ブログ
 
-**Route:** `/static`
+**ルート:** `/static`
 
-## Structure
+## 構造
 
 ```
-/static                  ← Homepage with article list and tag links
-/static/articles/[id]   ← Individual articles (at least 30+ pages)
-/static/tags/[tag]      ← Article listing by tag
+/static                  ← 記事一覧とタグリンクを含むホームページ
+/static/articles/[id]   ← 個別記事ページ（最低30ページ以上）
+/static/tags/[tag]      ← タグ別記事一覧
 ```
 
-## Key Features
+## 主要機能
 
-- All pages are statically generated using `generateStaticParams`
-- `<title>` and `<meta>` tags provided for each article
-- Semantic elements: `<h1>`, `<h2>`, `<p>`, `<ul>`, `<a>`, etc.
-- Each article links to 3–5 related articles
-- Tags used across articles (1–3 per post)
-- Global `<nav>` and `<footer>` with tag cloud, copyright
-- All links are valid, no 404s
+- すべてのページは`generateStaticParams`を使用して静的生成される
+- 各記事に`<title>`と`<meta>`タグを提供
+- セマンティック要素：`<h1>`、`<h2>`、`<p>`、`<ul>`、`<a>`など
+- 各記事は3〜5つの関連記事にリンク
+- 記事全体でタグを使用（投稿あたり1〜3個）
+- タグクラウドと著作権情報を含むグローバル`<nav>`と`<footer>`
+- すべてのリンクは有効で、404エラーなし
 
 ## Sitemap/Robots
 
-- `sitemap.xml`: all `/static/**` pages
+- `sitemap.xml`: すべての`/static/**`ページ
 - `robots.txt`: `Allow`
 
-## Crawler Tests
+## クローラーテスト
 
-- Structural HTML parsing
-- Recursive internal link traversal
-- Sitemap vs DOM discovery comparison
-- Relative vs absolute link handling
-- Anchor (`#section`) navigation parsing
+- 構造的HTMLパース
+- 再帰的内部リンク巡回
+- サイトマップ対DOM発見の比較
+- 相対リンク対絶対リンクの処理
+- アンカー（`#section`）ナビゲーションパース
 
-**Minimum Pages:** 30+
+**最小ページ数:** 30ページ以上

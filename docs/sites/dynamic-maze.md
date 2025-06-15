@@ -1,35 +1,35 @@
 # DynamicMaze
 
-**Purpose:** Tests how crawlers handle DOM randomness, structural variation, and inconsistent layout.
+**目的:** クローラーがDOMのランダム性、構造的変動、一貫性のないレイアウトをどのように処理するかをテストする。
 
-**Model:** CMS-driven or server-rendered news sites with changing rankings, ads, etc.
+**モデル:** ランキング変動、広告など、変化するCMS駆動またはサーバーレンダリングニュースサイト
 
-**Route:** `/dynamic`
+**ルート:** `/dynamic`
 
-## Structure
+## 構造
 
 ```
-/dynamic                 ← Homepage (layout changes every request)
-/dynamic/sections/[id]  ← Dynamic section pages (at least 20+)
+/dynamic                 ← ホームページ（リクエストごとにレイアウトが変更される）
+/dynamic/sections/[id]  ← 動的セクションページ（最低20ページ以上）
 ```
 
-## Key Features
+## 主要機能
 
-- Uses `getServerSideProps` to return dynamic content each time
-- Varying DOM structure and class names
-- Dynamic ads, quotes, section layouts
-- Consistent URLs but different page content
-- Tricky DOM selectors, changing IDs/classes
+- `getServerSideProps`を使用して毎回動的コンテンツを返す
+- 可変DOM構造とクラス名
+- 動的広告、引用、セクションレイアウト
+- 一貫したURLだが異なるページコンテンツ
+- 複雑なDOMセレクター、変更されるID/クラス
 
 ## Sitemap/Robots
 
-- `sitemap.xml`: none
+- `sitemap.xml`: なし
 - `robots.txt`: `Disallow: /dynamic`
 
-## Crawler Tests
+## クローラーテスト
 
-- Structural diff detection between runs
-- Selector robustness
-- Handling of contradicting robots and actual navigation
+- 実行間の構造的差分検出
+- セレクターの堅牢性
+- 矛盾するrobotsと実際のナビゲーションの処理
 
-**Minimum Pages:** 20+
+**最小ページ数:** 20ページ以上

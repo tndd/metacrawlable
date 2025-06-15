@@ -1,44 +1,44 @@
-# Anti-Crawler Mechanisms
+# アンチクローラー機構
 
-Each site implements specific anti-crawler features to test different aspects of crawler resilience.
+各サイトは、クローラーの回復力の異なる側面をテストするために、特定のアンチクローラー機能を実装します。
 
-## Implementation Requirements
+## 実装要件
 
-| Feature                  | Applies To    | Implementation Requirement                                              |
+| 機能                     | 適用対象      | 実装要件                                                          |
 | ------------------------ | ------------- | ----------------------------------------------------------------------- |
-| JS-only content          | `client-only` | Use `useEffect()` to render content post-load. Empty SSR output.        |
-| SSR + DOM randomization  | `dynamic`     | Random number generation + DOM reshuffling on each load.                |
-| Bot middleware           | `anti-bot`    | Use `middleware.ts` to inspect headers and block known bot UAs.         |
-| sitemap poisoning        | `trap-broken` | Include non-existent pages in sitemap.xml intentionally.                |
-| recursive link trap      | `trap/[slug]` | Slugs should link to more slugs, forming an infinite navigational loop. |
-| metadata mismatch        | `meta-fake`   | HTML content must differ drastically from head metadata.                |
-| robots.txt inconsistency | varies        | Some paths explicitly disallowed; others not mentioned at all.          |
+| JavaScript専用コンテンツ    | `client-only` | `useEffect()`を使用してロード後にコンテンツをレンダリング。SSR出力は空。    |
+| SSR + DOMランダム化     | `dynamic`     | ロード毎に乱数生成 + DOMシャッフル。                                  |
+| ボットミドルウェア         | `anti-bot`    | `middleware.ts`を使用してヘッダーを検査し、既知ボットUAをブロック。        |
+| サイトマップ汚染          | `trap-broken` | sitemap.xmlに意図的に存在しないページを含める。                    |
+| 再帰的リンクトラップ     | `trap/[slug]` | スラッグはさらなるスラッグにリンクし、無限ナビゲーションループを形成。  |
+| メタデータ不一致        | `meta-fake`   | HTMLコンテンツはheadメタデータと大きく異なる必要がある。            |
+| robots.txt不一致       | varies        | 一部のパスは明示的に禁止、他は全く言及されない。                       |
 
-Any deviation from these behaviors must be considered a **critical error**.
+これらの動作からの逸脱はすべて**重大なエラー**とみなされなければなりません。
 
-## Testing Strategies
+## テスト戦略
 
-### JavaScript Execution Testing
-- Pages with no server-side content
-- Dynamic content injection
-- Map rendering requirements
+### JavaScript実行テスト
+- サーバーサイドコンテンツがないページ
+- 動的コンテンツインジェクション
+- マップレンダリング要件
 
-### User-Agent Detection
-- Middleware-based blocking
-- Different responses per User-Agent
-- Header inspection and filtering
+### User-Agent検出
+- ミドルウェアベースのブロッキング
+- User-Agent毎の異なるレスポンス
+- ヘッダー検査とフィルタリング
 
-### Structural Challenges
-- Changing DOM layouts
-- Dynamic class names and IDs
-- Randomized content positioning
+### 構造的課題
+- 変化するDOMレイアウト
+- 動的クラス名とID
+- ランダム化されたコンテンツ配置
 
-### Navigation Traps
-- Infinite recursion paths
-- Broken link handling
-- Misleading sitemap entries
+### ナビゲーショントラップ
+- 無限再帰パス
+- ブロークンリンクハンドリング
+- 誤解を招くサイトマップエントリ
 
-### Metadata Inconsistency
-- False meta descriptions
-- Misleading JSON-LD schema
-- Title/content mismatches
+### メタデータ不一致
+- 偽のメタ説明
+- 誤解を招くJSON-LDスキーマ
+- タイトル/コンテンツの不一致

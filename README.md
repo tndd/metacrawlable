@@ -1,30 +1,30 @@
 # 🕷️ MetaCrawlable
 
-Mock web servers for adversarial crawler testing.
+敵対的クローラーテスト用のモックWebサーバー。
 
-## 📚 Documentation
+## 📚 ドキュメント
 
-- [Project Overview](docs/overview.md) - Purpose and goals
-- [Project Structure](docs/structure.md) - Directory layout and architecture
-- [Mock Sites](docs/sites/) - Detailed specifications for each test site
-- [Anti-Crawler Mechanisms](docs/anti-crawler.md) - Testing strategies and features
-- [Sitemap & Robots.txt Rules](docs/sitemap-robots.md) - Configuration requirements
+- [プロジェクト概要](docs/overview.md) - 目的と目標
+- [プロジェクト構造](docs/structure.md) - ディレクトリ構成とアーキテクチャ
+- [モックサイト](docs/sites/) - 各テストサイトの詳細仕様
+- [アンチクローラー機構](docs/anti-crawler.md) - テスト戦略と機能
+- [サイトマップ・robots.txtルール](docs/sitemap-robots.md) - 設定要件
 
-## Quick Start
+## クイックスタート
 
-This project provides documentation and specifications for implementing mock web servers using Next.js App Router.
+このプロジェクトは、Next.js App Routerを使用してモックWebサーバーを実装するためのドキュメントと仕様を提供します。
 
-## Mock Sites Overview
+## モックサイト概要
 
-| Site | Route | Purpose |
+| サイト | ルート | 目的 |
 |------|-------|---------|
-| [StaticLand](docs/sites/static-land.md) | `/static` | Static HTML baseline |
-| [DynamicMaze](docs/sites/dynamic-maze.md) | `/dynamic` | Server-side randomization |
-| [ClientShadow](docs/sites/client-shadow.md) | `/client-only` | JavaScript-only rendering |
-| [MapTown](docs/sites/map-town.md) | `/map` | Embedded maps testing |
-| [BotWarden](docs/sites/bot-warden.md) | `/anti-bot` | User-Agent blocking |
-| [LinkSpiral](docs/sites/link-spiral.md) | `/trap/[slug]` | Recursive link traps |
-| [BrokenWeb](docs/sites/broken-web.md) | `/trap-broken` | 404 error handling |
-| [MetaLie](docs/sites/meta-lie.md) | `/meta-fake` | Misleading metadata |
-| [NoMapZone](docs/sites/no-map-zone.md) | `/no-sitemap` | Link discovery only |
-| [HalfMapSite](docs/sites/half-map-site.md) | `/partial-map` | Incomplete sitemaps |
+| [StaticLand](docs/sites/static-land.md) | `/static` | 静的HTMLベースライン |
+| [DynamicMaze](docs/sites/dynamic-maze.md) | `/dynamic` | サーバーサイド動的生成 |
+| [ClientShadow](docs/sites/client-shadow.md) | `/client-only` | JavaScript専用レンダリング |
+| [MapTown](docs/sites/map-town.md) | `/map` | 埋め込みマップテスト |
+| [BotWarden](docs/sites/bot-warden.md) | `/anti-bot` | User-Agentブロック |
+| [LinkSpiral](docs/sites/link-spiral.md) | `/trap/[slug]` | 再帰的リンクトラップ |
+| [BrokenWeb](docs/sites/broken-web.md) | `/trap-broken` | 404エラーハンドリング |
+| [MetaLie](docs/sites/meta-lie.md) | `/meta-fake` | 誤解を招くメタデータ |
+| [NoMapZone](docs/sites/no-map-zone.md) | `/no-sitemap` | リンク発見のみ |
+| [HalfMapSite](docs/sites/half-map-site.md) | `/partial-map` | 不完全なサイトマップ |

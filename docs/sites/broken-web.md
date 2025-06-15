@@ -1,32 +1,32 @@
 # BrokenWeb
 
-**Purpose:** Tests crawler error handling for 404s and sitemap-inconsistent URLs.
+**目的:** 404エラーとサイトマップと一致しないURLに対するクローラーのエラー処理をテスト。
 
-**Model:** Poorly maintained legacy CMS
+**モデル:** メンテナンスが不十分なレガシーCMS
 
-**Route:** `/trap-broken`
+**ルート:** `/trap-broken`
 
-## Structure
+## 構造
 
 ```
-/trap-broken             ← Homepage
-/trap-broken/pages/[id] ← Pages (half lead to 404)
+/trap-broken             ← ホームページ
+/trap-broken/pages/[id] ← ページ（半分は404につながる）
 ```
 
-## Key Features
+## 主要機能
 
-- Sitemap lists all pages
-- 50% of pages return 404 intentionally
-- Some internal links point to missing pages
+- サイトマップにすべてのページを記載
+- 50%のページが意図的に404を返す
+- 一部の内部リンクは存在しないページを指す
 
 ## Sitemap/Robots
 
-- Full sitemap (including dead URLs)
+- 完全なサイトマップ（デッドURLを含む）
 - `robots.txt`: `Allow`
 
-## Crawler Tests
+## クローラーテスト
 
-- 404 response handling
-- Retry logic and sitemap trust
+- 404レスポンス処理
+- 再試行ロジックとサイトマップ信頼性
 
-**Minimum Pages:** 30+ (15+ are broken)
+**最小ページ数:** 30ページ以上（15ページ以上が破損）

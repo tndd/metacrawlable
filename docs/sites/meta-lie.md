@@ -1,32 +1,32 @@
 # MetaLie
 
-**Purpose:** Pages with misleading metadata—title and description contradict content.
+**目的:** 誤解を招くメタデータを持つページ—タイトルと説明がコンテンツと矛盾。
 
-**Model:** SEO spam, phishing, and fake portals
+**モデル:** SEOスパム、フィッシング、偽ポータル
 
-**Route:** `/meta-fake`
+**ルート:** `/meta-fake`
 
-## Structure
+## 構造
 
 ```
-/meta-fake              ← Landing
-/meta-fake/articles/[id] ← Article pages (at least 20+)
+/meta-fake              ← ランディングページ
+/meta-fake/articles/[id] ← 記事ページ（最低20ページ以上）
 ```
 
-## Key Features
+## 主要機能
 
-- Titles and meta descriptions are false
-- JSON-LD provides misleading schema
-- Human vs bot perception divergence
+- タイトルとメタディスクリプションが虚偽
+- JSON-LDが誤解を招くスキーマを提供
+- 人間対ボットの認識の乖離
 
 ## Sitemap/Robots
 
-- Full sitemap
+- 完全なサイトマップ
 - `robots.txt`: `Allow`
 
-## Crawler Tests
+## クローラーテスト
 
-- Metadata vs content inconsistency
-- Schema.org / JSON-LD interpretation
+- メタデータ対コンテンツの不一致
+- Schema.org / JSON-LD解釈
 
-**Minimum Pages:** 20+
+**最小ページ数:** 20ページ以上

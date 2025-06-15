@@ -1,31 +1,31 @@
 # HalfMapSite
 
-**Purpose:** Sitemap exists but only covers half the actual content.
+**目的:** サイトマップは存在するが、実際のコンテンツの半分しかカバーしていない。
 
-**Model:** Partial auto-generated CMS
+**モデル:** 部分的自動生成CMS
 
-**Route:** `/partial-map`
+**ルート:** `/partial-map`
 
-## Structure
+## 構造
 
 ```
-/partial-map             ← Homepage
-/partial-map/pages/[id] ← Pages (at least 40+, sitemap has 20)
+/partial-map             ← ホームページ
+/partial-map/pages/[id] ← ページ（最低40ページ以上、サイトマップには20ページ）
 ```
 
-## Key Features
+## 主要機能
 
-- Only a subset listed in sitemap.xml
-- Rest discoverable via internal links
+- sitemap.xmlには一部のみ記載
+- 残りは内部リンクを通じて発見可能
 
 ## Sitemap/Robots
 
-- Partial sitemap
+- 部分的サイトマップ
 - `robots.txt`: `Allow`
 
-## Crawler Tests
+## クローラーテスト
 
-- DOM-first vs sitemap-first strategy
-- Page discovery completeness
+- DOM優先対サイトマップ優先戦略
+- ページ発見の完全性
 
-**Minimum Pages:** 40+ (only 20 in sitemap)
+**最小ページ数:** 40ページ以上（サイトマップには20ページのみ）

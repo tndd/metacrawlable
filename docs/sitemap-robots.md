@@ -1,61 +1,61 @@
-# Sitemap & Robots.txt Rules
+# サイトマップとRobots.txtルール
 
-You must implement the following sitemap/robots logic for each mock site:
+各モックサイトに対して以下のサイトマップ/robotsロジックを実装する必要があります：
 
-## Configuration Matrix
+## 設定マトリックス
 
-| Site Name      | sitemap.xml | robots.txt  | Expected Outcome                                                         |
+| サイト名        | sitemap.xml | robots.txt  | 期待される結果                                                            |
 | -------------- | ----------- | ----------- | ------------------------------------------------------------------------ |
-| `StaticLand`   | ✅ Complete | ✅ Allow    | Fully visible and crawlable                                              |
-| `DynamicMaze`  | ❌ None     | ✅ Disallow | Excluded from indexing by rule                                           |
-| `ClientShadow` | ✅ Present  | ❌ None     | Sitemap listed but content is invisible without JS                       |
-| `BotWarden`    | ❌ None     | ❌ Disallow | Crawler banned; no site map; dynamic rejection via middleware            |
-| `BrokenWeb`    | ✅ Present  | ✅ Allow    | Sitemap links lead to 404s                                               |
-| `HalfMapSite`  | ✅ Partial  | ✅ Allow    | Only partial site listed, requires link traversal to find full structure |
-| `NoMapZone`    | ❌ None     | ❌ None     | Crawler must discover all pages organically                              |
+| `StaticLand`   | ✅ 完全     | ✅ 許可     | 完全に表示されクロール可能                                                  |
+| `DynamicMaze`  | ❌ なし     | ✅ 禁止     | ルールによってインデックシングから除外                                         |
+| `ClientShadow` | ✅ 存在     | ❌ なし     | サイトマップにリストされているがJSなしではコンテンツが不可視                      |
+| `BotWarden`    | ❌ なし     | ❌ 禁止     | クローラーが禁止され、サイトマップなし、ミドルウェアで動的拒否                   |
+| `BrokenWeb`    | ✅ 存在     | ✅ 許可     | サイトマップリンクが404を返す                                               |
+| `HalfMapSite`  | ✅ 部分的   | ✅ 許可     | 部分的なサイトのみリスト、完全な構造を見つけるためにリンクたどりが必要              |
+| `NoMapZone`    | ❌ なし     | ❌ なし     | クローラーはすべてのページを有機的に発見しなければならない                      |
 
-## Implementation Details
+## 実装詳細
 
-### Sitemap Types
+### サイトマップタイプ
 
-**Complete Sitemap**: Lists all available pages for the site
-- Includes all valid routes
-- Provides accurate lastmod dates
-- Contains proper priority values
+**完全サイトマップ**: サイトのすべての利用可能なページをリスト
+- すべての有効なルートを含む
+- 正確なlastmod日付を提供
+- 適切な優先度値を含む
 
-**Partial Sitemap**: Intentionally omits some existing pages
-- Lists only 50% of actual content
-- Forces crawlers to use link discovery
-- Tests crawler completeness strategies
+**部分的サイトマップ**: 意図的に一部の既存ページを省略
+- 実際のコンテンツの50%のみをリスト
+- クローラーにリンク発見を強制
+- クローラーの完全性戦略をテスト
 
-**Poisoned Sitemap**: Contains invalid or non-existent URLs
-- Includes dead links intentionally
-- Tests error handling capabilities
-- Verifies retry logic
+**汚染サイトマップ**: 無効または存在しないURLを含む
+- 意図的にデッドリンクを含む
+- エラーハンドリング機能をテスト
+- リトライロジックを検証
 
-### Robots.txt Variations
+### Robots.txtバリエーション
 
-**Allow All**: Standard permissive configuration
+**すべて許可**: 標準的な許可設定
 ```
 User-agent: *
 Allow: /
 ```
 
-**Disallow Specific**: Blocks access to certain paths
+**特定パス禁止**: 特定のパスへのアクセスをブロック
 ```
 User-agent: *
 Disallow: /dynamic
 Disallow: /anti-bot
 ```
 
-**No robots.txt**: File should not exist
-- Tests default crawler behavior
-- Forces organic discovery methods
+**robots.txtなし**: ファイルが存在しない
+- デフォルトクローラー動作をテスト
+- 有機的発見方法を強制
 
-### Testing Implications
+### テストへの影響
 
-Each configuration tests specific crawler capabilities:
-- **Compliance**: Following robots.txt directives
-- **Discovery**: Finding pages without sitemap guidance
-- **Error Handling**: Managing 404s and broken links
-- **Completeness**: Discovering all available content
+各設定は特定のクローラー機能をテストします：
+- **コンプライアンス**: robots.txtディレクティブの遵守
+- **発見**: サイトマップのガイダンスなしでページを発見
+- **エラーハンドリング**: 404やブロークンリンクの管理
+- **完全性**: すべての利用可能なコンテンツの発見

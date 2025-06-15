@@ -52,9 +52,10 @@ tests/
 │   ├── pages.spec.ts     # Test files
 │   ├── README.md         # This documentation
 │   └── result/           # Test results (git ignored)
-│       ├── traces/
-│       ├── screenshots/
-│       └── videos/
+│       ├── artifacts/    # Screenshots, videos, traces
+│       └── reports/      # HTML and JSON reports
+│           ├── html/     # HTML test report
+│           └── results.json
 └── (future sites)/
     ├── dynamic/
     │   └── result/       # DynamicMaze test results

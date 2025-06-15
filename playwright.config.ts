@@ -1,5 +1,17 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Determine output directory based on project being run
+const getOutputDir = () => {
+  const project = process.env.PLAYWRIGHT_PROJECT || 'static-land';
+  const projectDirs: Record<string, string> = {
+    'static-land': './tests/static/result/',
+    'dynamic-maze': './tests/dynamic/result/',
+    'client-shadow': './tests/client-only/result/',
+    'bot-warden': './tests/anti-bot/result/',
+  };
+  return projectDirs[project] || './test-results/';
+};
+
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -7,8 +19,8 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['html'],
-    ['json']
+    ['html', { outputFolder: `${getOutputDir()}reports/html` }],
+    ['json', { outputFile: `${getOutputDir()}reports/results.json` }]
   ],
   use: {
     baseURL: 'http://localhost:3000',
@@ -19,7 +31,7 @@ export default defineConfig({
     {
       name: 'static-land',
       testDir: './tests/static',
-      outputDir: './tests/static/result/',
+      outputDir: './tests/static/result/artifacts/',
       use: { ...devices['Desktop Chrome'] },
     },
     // Future projects for other sites:

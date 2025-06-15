@@ -9,8 +9,10 @@
     "lint": "next lint",
     "test": "playwright test",
     "test:static": "PLAYWRIGHT_PROJECT=static-land playwright test --project=static-land",
+    "test:dynamic": "PLAYWRIGHT_PROJECT=dynamic-maze playwright test --project=dynamic-maze",
     "test:report": "npx playwright show-report",
-    "test:report:static": "npx playwright show-report $(ls -td tests/static/result/*/reports/html 2>/dev/null | head -1 || echo 'tests/static/result')"
+    "test:report:static": "npx playwright show-report $(ls -td tests/static/result/*/reports/html 2>/dev/null | head -1 || echo 'tests/static/result')",
+    "test:report:dynamic": "npx playwright show-report $(ls -td tests/dynamic/result/*/reports/html 2>/dev/null | head -1 || echo 'tests/dynamic/result')"
   },
   "dependencies": {
     "next": "15.3.3",

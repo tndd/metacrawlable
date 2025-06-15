@@ -16,13 +16,7 @@
 │       ├── static-land.md      # StaticLand仕様
 │       ├── dynamic-maze.md     # DynamicMaze仕様
 │       ├── client-shadow.md    # ClientShadow仕様
-│       ├── map-town.md         # MapTown仕様
-│       ├── bot-warden.md       # BotWarden仕様
-│       ├── link-spiral.md      # LinkSpiral仕様
-│       ├── broken-web.md       # BrokenWeb仕様
-│       ├── meta-lie.md         # MetaLie仕様
-│       ├── no-map-zone.md      # NoMapZone仕様
-│       └── half-map-site.md    # HalfMapSite仕様
+│       └── bot-warden.md       # BotWarden仕様
 ```
 
 ## 実装構造
@@ -33,40 +27,35 @@ Next.js実装は以下の構造に従うべきです：
 your-project/
 ├── app/
 │   ├── static/
+│   │   ├── page.tsx
+│   │   └── articles/[id]/page.tsx
 │   ├── dynamic/
+│   │   ├── page.tsx
+│   │   └── sections/[id]/page.tsx
 │   ├── client-only/
-│   ├── map/
+│   │   ├── page.tsx
+│   │   └── profile/[id]/page.tsx
 │   ├── anti-bot/
-│   ├── trap/[slug]/
-│   ├── trap-broken/
-│   ├── meta-fake/
-│   ├── no-sitemap/
-│   ├── partial-map/
+│   │   ├── page.tsx
+│   │   └── protected/page.tsx
+│   ├── robots.txt/route.ts      # 動的robots.txt配信
+│   ├── sitemap.ts               # 統合sitemap生成
 │   └── layout.tsx
-├── middleware.ts         # アンチボットUser-Agent検出に必要
-├── public/
-│   ├── robots.txt         # 複数バージョンが条件付きで提供される場合がある
-│   └── sitemap.xml        # 完全版と破損版の両方を含む必要がある
-├── next.config.js         # リライトとミドルウェア条件を含む場合がある
+├── middleware.ts                 # サイト別ルーティングとUser-Agent検出
+├── next.config.js
 ├── tsconfig.json
 └── package.json
 ```
 
-## モックサイトの概要
+## 核心モックサイト（4サイト構成）
 
-`app/`配下の各サブディレクトリは**モックサイト**を表します。これらはページではなく、完全な敵対的テスト環境です。各サイトは`page.tsx`ファイルを含み、以下の仕様に準拠する必要があります：
+`app/`配下の各サブディレクトリは**モックサイト**を表します。これらはページではなく、完全な敵対的テスト環境です。各サイトは特定のクローラー課題をテストするために設計されています：
 
-| サイト名        | ルートパス      | 必要な動作                                                                        |
-| -------------- | -------------- | ------------------------------------------------------------------------------- |
-| `StaticLand`   | `/static`      | ハードコードされた内部リンクを持つプレーンHTMLサイト。JSなしで完全クロール可能。     |
-| `DynamicMaze`  | `/dynamic`     | Server Componentsで動的コンテンツを生成し、リクエストごとにDOMをランダム化。      |
-| `ClientShadow` | `/client-only` | 初期HTMLは空。コンテンツは**JavaScript実行後のみ**表示される。                   |
-| `MapTown`      | `/map`         | Google MapsまたはOpenStreetMap JS APIを使用してマップを表示。JSなしでは非表示。  |
-| `BotWarden`    | `/anti-bot`    | ミドルウェアが特定のUser-Agentに対してレスポンスをブロックまたは変更。            |
-| `LinkSpiral`   | `/trap/[slug]` | 再帰的リンクを動的に生成。無限の深度が可能。                                     |
-| `BrokenWeb`    | `/trap-broken` | サイトマップで参照されるページが存在しないか404を返す。                          |
-| `MetaLie`      | `/meta-fake`   | メタタイトルと説明が表示されるコンテンツと異なる。                               |
-| `NoMapZone`    | `/no-sitemap`  | sitemap.xmlもrobots.txtも提供されない。サイトは手動で発見する必要がある。        |
-| `HalfMapSite`  | `/partial-map` | sitemap.xmlは存在するが多くのライブページを省略。クローリングヒューリスティックを誤解させる。 |
+| サイト名        | ルートパス      | 核心テスト課題                                                               |
+| -------------- | -------------- | -------------------------------------------------------------------------- |
+| `StaticLand`   | `/static`      | **構造解析**: セマンティックHTML、内部リンク巡回、静的コンテンツパース         |
+| `DynamicMaze`  | `/dynamic`     | **動的対応**: Server-side生成、DOMランダム化、構造変動への適応              |
+| `ClientShadow` | `/client-only` | **JavaScript実行**: CSR専用コンテンツ、useEffectレンダリング、SPA対応       |
+| `BotWarden`    | `/anti-bot`    | **回避能力**: User-Agent検出、ミドルウェアブロック、アクセス制御突破         |
 
-上記の各サイトは**完全に実装されなければならず**、パーサーの適応性をテストするために識別可能なHTML構造を提供する必要があります。
+各サイトは**独立したテストケース**として機能し、クローラーの異なる側面を評価します。すべてのサイトが**完全に実装されなければならず**、識別可能なHTML構造を提供する必要があります。

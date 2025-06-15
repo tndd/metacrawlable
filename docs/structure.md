@@ -59,7 +59,7 @@ your-project/
 | サイト名        | ルートパス      | 必要な動作                                                                        |
 | -------------- | -------------- | ------------------------------------------------------------------------------- |
 | `StaticLand`   | `/static`      | ハードコードされた内部リンクを持つプレーンHTMLサイト。JSなしで完全クロール可能。     |
-| `DynamicMaze`  | `/dynamic`     | リクエストごとにコンテンツをランダム化するために`getServerSideProps()`を使用。     |
+| `DynamicMaze`  | `/dynamic`     | Server Componentsで動的コンテンツを生成し、リクエストごとにDOMをランダム化。      |
 | `ClientShadow` | `/client-only` | 初期HTMLは空。コンテンツは**JavaScript実行後のみ**表示される。                   |
 | `MapTown`      | `/map`         | Google MapsまたはOpenStreetMap JS APIを使用してマップを表示。JSなしでは非表示。  |
 | `BotWarden`    | `/anti-bot`    | ミドルウェアが特定のUser-Agentに対してレスポンスをブロックまたは変更。            |

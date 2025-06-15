@@ -4,15 +4,18 @@
 
 ## 設定マトリックス
 
-| サイト名        | sitemap.xml | robots.txt  | 期待される結果                                                            |
+| サイト名        | sitemap.xml | robots.txt内容  | 期待される結果                                                            |
 | -------------- | ----------- | ----------- | ------------------------------------------------------------------------ |
-| `StaticLand`   | ✅ 完全     | ✅ 許可     | 完全に表示されクロール可能                                                  |
-| `DynamicMaze`  | ❌ なし     | ✅ 禁止     | ルールによってインデックシングから除外                                         |
-| `ClientShadow` | ✅ 存在     | ❌ なし     | サイトマップにリストされているがJSなしではコンテンツが不可視                      |
-| `BotWarden`    | ❌ なし     | ❌ 禁止     | クローラーが禁止され、サイトマップなし、ミドルウェアで動的拒否                   |
-| `BrokenWeb`    | ✅ 存在     | ✅ 許可     | サイトマップリンクが404を返す                                               |
-| `HalfMapSite`  | ✅ 部分的   | ✅ 許可     | 部分的なサイトのみリスト、完全な構造を見つけるためにリンクたどりが必要              |
-| `NoMapZone`    | ❌ なし     | ❌ なし     | クローラーはすべてのページを有機的に発見しなければならない                      |
+| `StaticLand`   | ✅ 完全版    | `Allow: /`   | 完全に表示されクロール可能                                                  |
+| `DynamicMaze`  | ❌ 含まれない | `Disallow: /dynamic` | robots.txtルールによってインデックシングから除外                             |
+| `ClientShadow` | ✅ 完全版    | **ファイルなし** | サイトマップにリストされているがJSなしではコンテンツが不可視                      |
+| `MapTown`      | ✅ 完全版    | `Allow: /`   | マップAPIコンテンツ、JS必須でレンダリング                                     |
+| `BotWarden`    | ❌ 含まれない | `Disallow: /anti-bot` + ミドルウェア拒否 | robots.txt+ミドルウェアで二重ブロック |
+| `LinkSpiral`   | ✅ 部分版    | `Allow: /`   | サイトマップに基本パスのみ、無限深度は発見要                                   |
+| `BrokenWeb`    | ✅ 汚染版    | `Allow: /`   | サイトマップに存在しないページを含み、404を返す                               |
+| `MetaLie`      | ✅ 完全版    | `Allow: /`   | 正常アクセス可能だが、メタデータと実コンテンツが不一致                          |
+| `NoMapZone`    | ❌ 含まれない | **ファイルなし** | 完全に有機的発見が必要、ガイダンスなし                                       |
+| `HalfMapSite`  | ✅ 部分版    | `Allow: /`   | 50%のページのみサイトマップ記載、残りはリンク発見要                           |
 
 ## 実装詳細
 
@@ -35,22 +38,37 @@
 
 ### Robots.txtバリエーション
 
-**すべて許可**: 標準的な許可設定
+**すべて許可**: 標準的な許可設定（StaticLand, MapTown, LinkSpiral, BrokenWeb, MetaLie, HalfMapSite）
 ```
 User-agent: *
 Allow: /
+Sitemap: https://example.com/sitemap.xml
 ```
 
-**特定パス禁止**: 特定のパスへのアクセスをブロック
+**特定パス禁止**: 特定のパスへのアクセスをブロック（DynamicMaze, BotWarden）
 ```
 User-agent: *
 Disallow: /dynamic
 Disallow: /anti-bot
+Allow: /
 ```
 
-**robots.txtなし**: ファイルが存在しない
-- デフォルトクローラー動作をテスト
+**robots.txtファイルなし**: HTTPステータス404を返す（ClientShadow, NoMapZone）
+- ファイルは存在せず、`/robots.txt`アクセス時に404エラー
+- デフォルトクローラー動作をテスト（通常は全許可として扱われる）
 - 有機的発見方法を強制
+
+### 動的robots.txt配信
+
+実装では、アクセスされたパスに基づいてrobots.txtの内容を動的に変更する必要があります：
+
+```javascript
+// middleware.ts または api/robots.txt
+if (pathname === '/robots.txt') {
+  // リクエストのRefererやUser-Agentに基づいて
+  // 異なるrobots.txtを配信
+}
+```
 
 ### テストへの影響
 

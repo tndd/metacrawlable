@@ -16,7 +16,7 @@
 
 ## 各サイト概要
 
-| サイト                                      | ルート         | 目的                        |
+| サイト                                      | ルート         | 特徴                        |
 | ------------------------------------------- | -------------- | --------------------------- |
 | [StaticLand](docs/sites/static-land.md)     | `/static`      | 静的 HTML ベースライン      |
 | [DynamicMaze](docs/sites/dynamic-maze.md)   | `/dynamic`     | サーバーサイド動的生成      |

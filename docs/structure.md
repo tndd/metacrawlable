@@ -13,7 +13,6 @@ This repository contains documentation and specifications for the MetaCrawlable 
 │   ├── anti-crawler.md         # Anti-crawler mechanisms
 │   ├── sitemap-robots.md       # Sitemap and robots.txt rules
 │   └── sites/                  # Individual site specifications
-│       ├── README.md           # Sites overview
 │       ├── static-land.md      # StaticLand specifications
 │       ├── dynamic-maze.md     # DynamicMaze specifications
 │       ├── client-shadow.md    # ClientShadow specifications

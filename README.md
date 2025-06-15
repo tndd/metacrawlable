@@ -29,4 +29,15 @@ This project provides documentation and specifications for implementing mock web
 | NoMapZone | `/no-sitemap` | Link discovery only |
 | HalfMapSite | `/partial-map` | Incomplete sitemaps |
 
-See [docs/sites/](docs/sites/) for detailed specifications.
+## Detailed Site Specifications
+
+- [StaticLand](docs/sites/static-land.md) - Static HTML baseline testing
+- [DynamicMaze](docs/sites/dynamic-maze.md) - Server-side randomization
+- [ClientShadow](docs/sites/client-shadow.md) - JavaScript-only rendering
+- [MapTown](docs/sites/map-town.md) - Embedded maps testing
+- [BotWarden](docs/sites/bot-warden.md) - User-Agent blocking
+- [LinkSpiral](docs/sites/link-spiral.md) - Recursive link traps
+- [BrokenWeb](docs/sites/broken-web.md) - 404 error handling
+- [MetaLie](docs/sites/meta-lie.md) - Misleading metadata
+- [NoMapZone](docs/sites/no-map-zone.md) - Link discovery only
+- [HalfMapSite](docs/sites/half-map-site.md) - Incomplete sitemaps

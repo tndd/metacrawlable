@@ -4,122 +4,116 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MetaCrawlable is a documentation and specification project for creating adversarial web crawler testing environments. This is **NOT** an implemented codebase - it contains only markdown documentation that specifies how to build mock web servers using Next.js App Router.
+MetaCrawlable is a **streamlined documentation and specification project** for creating efficient adversarial web crawler testing environments. This is **NOT** an implemented codebase - it contains only markdown documentation that specifies how to build mock web servers using Next.js App Router.
 
-### Purpose
+### Purpose - Focused 4-Site Architecture
 
-The project provides specifications for 10 different mock websites that simulate various anti-crawler challenges, including:
+The project provides specifications for **4 core mock websites** that efficiently cover the main anti-crawler challenges:
 
-- JavaScript-only content rendering
-- Dynamic DOM manipulation
-- User-Agent blocking
-- Sitemap inconsistencies and traps
-- Recursive link generation
-- 404 error handling
+1. **StaticLand** (`/static`) - Baseline static HTML + semantic structure testing
+2. **DynamicMaze** (`/dynamic`) - Server-side DOM randomization + partial sitemap discovery  
+3. **ClientShadow** (`/client-only`) - JavaScript-only rendering + CSR content detection
+4. **BotWarden** (`/anti-bot`) - User-Agent blocking + access control evasion
+
+This **4-site design eliminates previous specification conflicts** while maintaining comprehensive crawler testing capabilities.
 
 ## Architecture Overview
 
 ### Documentation Structure
 
-- `docs/overview.md` - Project goals and requirements (all features are mandatory)
-- `docs/structure.md` - Implementation architecture for Next.js App Router
-- `docs/anti-crawler.md` - Anti-crawler mechanism specifications
-- `docs/sitemap-robots.md` - Sitemap and robots.txt configuration matrix
-- `docs/sites/` - Individual specifications for 10 mock sites
+- `docs/overview.md` - Project goals and 4-site design rationale
+- `docs/structure.md` - Next.js App Router implementation architecture  
+- `docs/anti-crawler.md` - Streamlined anti-crawler mechanisms for 4 sites
+- `docs/sitemap-robots.md` - Unified sitemap/robots.txt configuration (no conflicts)
+- `docs/implementation-guide.md` - Complete implementation guide with code examples
+- `docs/sites/` - Individual specifications for 4 core sites only
 
-### Mock Site Categories
+### Removed Complexity
 
-Each site targets specific crawler testing scenarios:
-
-1. **StaticLand** (`/static`) - Baseline static HTML
-2. **DynamicMaze** (`/dynamic`) - Server-side randomization
-3. **ClientShadow** (`/client-only`) - JavaScript-only rendering
-4. **MapTown** (`/map`) - Embedded map testing
-5. **BotWarden** (`/anti-bot`) - User-Agent blocking
-6. **LinkSpiral** (`/trap/[slug]`) - Recursive link traps
-7. **BrokenWeb** (`/trap-broken`) - 404 error generation
-8. **MetaLie** (`/meta-fake`) - Misleading metadata
-9. **NoMapZone** (`/no-sitemap`) - No sitemap/robots.txt
-10. **HalfMapSite** (`/partial-map`) - Incomplete sitemaps
+**Previous 10-site issues resolved:**
+- ❌ Conflicting robots.txt requirements → ✅ Single unified robots.txt
+- ❌ Impossible sitemap matrix → ✅ Logical sitemap distribution  
+- ❌ SessionStorage server-side contradiction → ✅ Pure server-side randomization
+- ❌ External API dependencies → ✅ Self-contained implementations
+- ❌ Infinite recursion impossibilities → ✅ Practical finite implementations
 
 ## Key Implementation Requirements
 
 ### Technology Stack
 
-- **Next.js App Router** (NOT Pages Router)
-- TypeScript recommended
-- Middleware required for User-Agent detection
-- Dynamic and static route generation
+- **Next.js 14+ App Router** (NOT Pages Router)
+- **TypeScript** recommended for type safety
+- **React 18+** for Server Components support
+- **No external API dependencies** (self-contained)
 
-### Critical Technical Notes
-
-✅ **RESOLVED ISSUES:**
-
-- Next.js App Router patterns now correctly specified (Server Components, dynamic generation)
-- Sitemap/robots.txt configuration matrix updated with logical consistency
-- Bot detection specifications added with concrete User-Agent lists and response codes
-- Dynamic content generation algorithms specified with detailed implementation requirements
-- Error handling specifications detailed with deterministic 404 generation logic
-
-⚠️ **IMPLEMENTATION REQUIREMENTS:**
-
-- All sites must use Next.js App Router patterns (no Pages Router)
-- User-Agent detection must follow exact specifications in anti-crawler.md
-- DOM randomization must implement specified algorithms for DynamicMaze
-- 404 errors must follow deterministic logic (even page IDs return 404)
-
-### Implementation Architecture
+### Unified Architecture (CONSISTENT & IMPLEMENTABLE)
 
 ```
 app/
-├── static/             # StaticLand implementation
-├── dynamic/            # DynamicMaze (server components)
-├── client-only/        # ClientShadow (useEffect rendering)
-├── map/                # MapTown (map API integration)
-├── anti-bot/           # BotWarden (middleware integration)
-├── trap/[slug]/        # LinkSpiral (dynamic routing)
-├── trap-broken/        # BrokenWeb (404 generation)
-├── meta-fake/          # MetaLie (metadata mismatches)
-├── no-sitemap/         # NoMapZone (discovery testing)
-├── partial-map/        # HalfMapSite (incomplete sitemaps)
+├── static/                     # StaticLand (37 pages total)
+│   ├── page.tsx               # Home
+│   ├── articles/[id]/page.tsx # Articles (30 pages)
+│   └── categories/[name]/page.tsx # Categories (5 pages)
+├── dynamic/                    # DynamicMaze (22 pages total)  
+│   ├── page.tsx               # Home (randomized structure)
+│   ├── sections/[id]/page.tsx # Sections (20 pages)
+│   └── random/page.tsx        # Fully random structure
+├── client-only/                # ClientShadow (27 pages total)
+│   ├── page.tsx               # Home (useEffect rendering)
+│   ├── profile/[id]/page.tsx  # Profiles (25 pages)
+│   └── dashboard/page.tsx     # Dashboard
+├── anti-bot/                   # BotWarden (3 pages total)
+│   ├── page.tsx               # Home (UA-gated)
+│   ├── protected/page.tsx     # Protected content
+│   └── honeypot/page.tsx      # Bot trap
+├── robots.txt/route.ts         # Unified robots.txt (Route Handler)
+├── sitemap.ts                  # Unified sitemap generation
 └── layout.tsx
 
-middleware.ts           # User-Agent detection logic
-public/
-├── robots.txt          # Conditional serving logic
-└── sitemap.xml         # Complete/corrupted versions
+middleware.ts                   # BotWarden User-Agent detection only
 ```
+
+### Critical Technical Requirements
+
+✅ **IMPLEMENTATION READY:**
+
+- All 4 sites use standard Next.js App Router patterns
+- User-Agent detection follows exact middleware.ts specifications
+- DOM randomization uses Server Components (no sessionStorage dependency)
+- Unified robots.txt/sitemap eliminates conflicts
+- No external API dependencies or infinite recursion
+
+⚠️ **MANDATORY COMPLIANCE:**
+
+- **Exact TypeScript code** provided in `docs/implementation-guide.md`
+- **Sitemap distribution**: StaticLand (full), DynamicMaze (partial), others (none)
+- **Robots.txt rules**: Allow static/dynamic/client-only, Disallow anti-bot
+- **Middleware scope**: Only `/anti-bot` path prefix
 
 ## Development Guidelines
 
-### Documentation Updates
+### Documentation Authority
 
-- **Literal interpretation required** - specs must be followed exactly as written
-- All 10 sites are **mandatory** - no optional implementations
-- Minimum page requirements specified per site (20-30+ pages each)
-- Each site must provide distinguishable HTML structures
-
-### Consistency Requirements
-
-- Cross-reference all site specifications with the sitemap-robots configuration matrix
-- Ensure middleware integrates properly across all routes
-- Verify that anti-crawler mechanisms work independently
+- **All 4 sites are mandatory** - streamlined but comprehensive
+- **Follow implementation-guide.md exactly** - complete code examples provided
+- **No assumptions or modifications** - specifications are implementation-ready
+- **Page count requirements**: StaticLand(37) + DynamicMaze(22) + ClientShadow(27) + BotWarden(3) = 89 pages total
 
 ### Testing Validation
 
-Each implemented site should validate against its specific crawler challenges:
+Each site tests specific crawler capabilities:
 
-- Structure parsing, link traversal, error handling
-- JavaScript execution requirements
-- User-Agent detection and blocking
-- Sitemap compliance vs. actual content discovery
+1. **StaticLand**: HTML parsing, link traversal, metadata extraction, sitemap utilization
+2. **DynamicMaze**: Dynamic structure adaptation, partial sitemap discovery, selector robustness  
+3. **ClientShadow**: JavaScript execution, useEffect content detection, organic link discovery
+4. **BotWarden**: User-Agent spoofing, 403 error handling, robots.txt compliance
 
 ## Important Notes
 
-1. **This is specification-only** - no actual Next.js code exists yet
-2. **All features are mandatory** - nothing is optional per `docs/overview.md`
-3. **App Router required** - ignore any Pages Router references in current docs
-4. **Exact compliance needed** - specifications must be implemented literally without assumptions
-5. **Cross-site integration** - sites must work together within single Next.js application
+1. **This is specification-only** - provides complete implementation blueprint
+2. **4-site architecture is final** - eliminates all previous specification conflicts
+3. **App Router required** - all code examples use App Router patterns
+4. **Implementation guide included** - complete TypeScript code provided
+5. **Self-contained design** - no external dependencies or impossible requirements
 
-When implementing, prioritize resolving the Next.js App Router inconsistencies before beginning development.
+When implementing, follow `docs/implementation-guide.md` exactly for conflict-free development.

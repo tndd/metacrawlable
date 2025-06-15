@@ -1,40 +1,60 @@
 # StaticLand
 
-**目的:** セマンティックに豊富で完全に静的なHTML環境でのクローラーパフォーマンスを評価するためのベースラインテストベッド。クローラーが標準的なマークアップを解析し、内部リンクを巡回できるかを確認する。
+**目的:** セマンティックHTML解析とリンク巡回の基礎能力を評価するベースラインテストサイト
 
-**実世界のモデル:** Jekyll、Hugo、GitHub Pagesなどを使用した静的ブログ
+**テスト領域:** 構造解析、内部リンク巡回、メタデータ抽出
 
 **ルート:** `/static`
 
 ## 構造
 
 ```
-/static                  ← 記事一覧とタグリンクを含むホームページ
-/static/articles/[id]   ← 個別記事ページ（最低30ページ以上）
-/static/tags/[tag]      ← タグ別記事一覧
+/static                    ← ホームページ（記事一覧、ナビゲーション）
+/static/articles/[id]      ← 個別記事ページ（30ページ）
+/static/categories/[name]  ← カテゴリ別記事一覧（5カテゴリ）
 ```
 
-## 主要機能
+## 実装要件
 
-- すべてのページは`generateStaticParams`を使用して静的生成される
-- 各記事に`<title>`と`<meta>`タグを提供
-- セマンティック要素：`<h1>`、`<h2>`、`<p>`、`<ul>`、`<a>`など
-- 各記事は3〜5つの関連記事にリンク
-- 記事全体でタグを使用（投稿あたり1〜3個）
-- タグクラウドと著作権情報を含むグローバル`<nav>`と`<footer>`
-- すべてのリンクは有効で、404エラーなし
+### 静的生成
+```typescript
+// app/static/articles/[id]/page.tsx
+export async function generateStaticParams() {
+  return Array.from({ length: 30 }, (_, i) => ({
+    id: (i + 1).toString()
+  }))
+}
+```
 
-## Sitemap/Robots
+### セマンティック構造
+- `<article>` - 各記事コンテンツ
+- `<nav>` - サイト内ナビゲーション
+- `<footer>` - サイト情報、リンク集
+- 適切な見出し階層（`<h1>`, `<h2>`, `<h3>`）
+- 内部リンク網（各記事から3-5記事へリンク）
 
-- `sitemap.xml`: すべての`/static/**`ページ
-- `robots.txt`: `Allow`
+### メタデータ
+```typescript
+export const metadata: Metadata = {
+  title: 'Article Title',
+  description: 'Article description',
+  openGraph: {
+    title: 'Article Title',
+    description: 'Article description',
+  }
+}
+```
 
-## クローラーテスト
+## Sitemap/Robots設定
 
-- 構造的HTMLパース
-- 再帰的内部リンク巡回
-- サイトマップ対DOM発見の比較
-- 相対リンク対絶対リンクの処理
-- アンカー（`#section`）ナビゲーションパース
+- **Sitemap**: 全ページ含む（完全版）
+- **Robots.txt**: `Allow: /static`
 
-**最小ページ数:** 30ページ以上
+## クローラーテスト観点
+
+1. **HTML構造解析**: セマンティック要素の認識
+2. **リンク巡回**: 内部リンクの完全発見
+3. **メタデータ抽出**: title, description, OpenGraphの取得
+4. **サイトマップ活用**: sitemap.xmlとの整合性確認
+
+**ページ数:** 37ページ（ホーム1 + 記事30 + カテゴリ5 + about1）

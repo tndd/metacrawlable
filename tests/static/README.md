@@ -52,18 +52,28 @@ tests/
 │   ├── pages.spec.ts     # Test files
 │   ├── README.md         # This documentation
 │   └── result/           # Test results (git ignored)
-│       ├── artifacts/    # Screenshots, videos, traces
-│       └── reports/      # HTML and JSON reports
-│           ├── html/     # HTML test report
-│           └── results.json
+│       └── {timestamp}/  # Timestamped test run (YYYY-MM-DDTHH-MM-SS)
+│           ├── artifacts/    # Screenshots, videos, traces
+│           └── reports/      # HTML and JSON reports
+│               ├── html/     # HTML test report
+│               └── results.json
 └── (future sites)/
     ├── dynamic/
-    │   └── result/       # DynamicMaze test results
+    │   └── result/
+    │       └── {timestamp}/  # DynamicMaze timestamped results
     ├── client-only/
-    │   └── result/       # ClientShadow test results
+    │   └── result/
+    │       └── {timestamp}/  # ClientShadow timestamped results
     └── anti-bot/
-        └── result/       # BotWarden test results
+        └── result/
+            └── {timestamp}/  # BotWarden timestamped results
 ```
+
+**Benefits of Timestamp Structure:**
+- ✅ No file conflicts between test runs
+- ✅ Historical test results preserved
+- ✅ Simple, flat file structure within each timestamp
+- ✅ Automatic cleanup via gitignore pattern
 
 ## Test Framework
 - **Playwright** - End-to-end testing framework

@@ -10,7 +10,7 @@
     "test": "playwright test",
     "test:static": "PLAYWRIGHT_PROJECT=static-land playwright test --project=static-land",
     "test:report": "npx playwright show-report",
-    "test:report:static": "npx playwright show-report tests/static/result/reports/html"
+    "test:report:static": "npx playwright show-report $(ls -td tests/static/result/*/reports/html 2>/dev/null | head -1 || echo 'tests/static/result')"
   },
   "dependencies": {
     "next": "15.3.3",

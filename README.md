@@ -18,26 +18,13 @@ This project provides documentation and specifications for implementing mock web
 
 | Site | Route | Purpose |
 |------|-------|---------|
-| StaticLand | `/static` | Static HTML baseline |
-| DynamicMaze | `/dynamic` | Server-side randomization |
-| ClientShadow | `/client-only` | JavaScript-only rendering |
-| MapTown | `/map` | Embedded maps testing |
-| BotWarden | `/anti-bot` | User-Agent blocking |
-| LinkSpiral | `/trap/[slug]` | Recursive link traps |
-| BrokenWeb | `/trap-broken` | 404 error handling |
-| MetaLie | `/meta-fake` | Misleading metadata |
-| NoMapZone | `/no-sitemap` | Link discovery only |
-| HalfMapSite | `/partial-map` | Incomplete sitemaps |
-
-## Detailed Site Specifications
-
-- [StaticLand](docs/sites/static-land.md) - Static HTML baseline testing
-- [DynamicMaze](docs/sites/dynamic-maze.md) - Server-side randomization
-- [ClientShadow](docs/sites/client-shadow.md) - JavaScript-only rendering
-- [MapTown](docs/sites/map-town.md) - Embedded maps testing
-- [BotWarden](docs/sites/bot-warden.md) - User-Agent blocking
-- [LinkSpiral](docs/sites/link-spiral.md) - Recursive link traps
-- [BrokenWeb](docs/sites/broken-web.md) - 404 error handling
-- [MetaLie](docs/sites/meta-lie.md) - Misleading metadata
-- [NoMapZone](docs/sites/no-map-zone.md) - Link discovery only
-- [HalfMapSite](docs/sites/half-map-site.md) - Incomplete sitemaps
+| [StaticLand](docs/sites/static-land.md) | `/static` | Static HTML baseline |
+| [DynamicMaze](docs/sites/dynamic-maze.md) | `/dynamic` | Server-side randomization |
+| [ClientShadow](docs/sites/client-shadow.md) | `/client-only` | JavaScript-only rendering |
+| [MapTown](docs/sites/map-town.md) | `/map` | Embedded maps testing |
+| [BotWarden](docs/sites/bot-warden.md) | `/anti-bot` | User-Agent blocking |
+| [LinkSpiral](docs/sites/link-spiral.md) | `/trap/[slug]` | Recursive link traps |
+| [BrokenWeb](docs/sites/broken-web.md) | `/trap-broken` | 404 error handling |
+| [MetaLie](docs/sites/meta-lie.md) | `/meta-fake` | Misleading metadata |
+| [NoMapZone](docs/sites/no-map-zone.md) | `/no-sitemap` | Link discovery only |
+| [HalfMapSite](docs/sites/half-map-site.md) | `/partial-map` | Incomplete sitemaps |

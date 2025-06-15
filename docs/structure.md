@@ -1,11 +1,37 @@
 # Project Structure
 
-All development must occur inside this directory.
+## Documentation Structure
 
-## Directory Layout
+This repository contains documentation and specifications for the MetaCrawlable project:
 
 ```
 .
+├── README.md                    # Main project overview
+├── docs/
+│   ├── overview.md             # Project purpose and goals
+│   ├── structure.md            # This file - project structure
+│   ├── anti-crawler.md         # Anti-crawler mechanisms
+│   ├── sitemap-robots.md       # Sitemap and robots.txt rules
+│   └── sites/                  # Individual site specifications
+│       ├── README.md           # Sites overview
+│       ├── static-land.md      # StaticLand specifications
+│       ├── dynamic-maze.md     # DynamicMaze specifications
+│       ├── client-shadow.md    # ClientShadow specifications
+│       ├── map-town.md         # MapTown specifications
+│       ├── bot-warden.md       # BotWarden specifications
+│       ├── link-spiral.md      # LinkSpiral specifications
+│       ├── broken-web.md       # BrokenWeb specifications
+│       ├── meta-lie.md         # MetaLie specifications
+│       ├── no-map-zone.md      # NoMapZone specifications
+│       └── half-map-site.md    # HalfMapSite specifications
+```
+
+## Implementation Structure
+
+The Next.js implementation should follow this structure:
+
+```
+your-project/
 ├── app/
 │   ├── static/
 │   ├── dynamic/
@@ -24,7 +50,7 @@ All development must occur inside this directory.
 │   └── sitemap.xml        # Must include both complete and corrupted examples
 ├── next.config.js         # May include rewrites and middleware conditions
 ├── tsconfig.json
-└── README.md              # This file
+└── package.json
 ```
 
 ## Mock Site Summary

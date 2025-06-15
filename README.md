@@ -12,7 +12,7 @@ Mock web servers for adversarial crawler testing.
 
 ## Quick Start
 
-All development occurs in `mock/crawled_server/` using Next.js App Router.
+This project provides documentation and specifications for implementing mock web servers using Next.js App Router.
 
 ## Mock Sites Overview
 

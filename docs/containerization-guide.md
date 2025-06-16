@@ -108,81 +108,75 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
-### Phase 2: 開発環境整備
+### Phase 2: テスト実行環境統合（簡素化版）
 
 #### 目標
-- docker-compose.ymlによる開発環境
-- ホットリロード対応
-- テスト実行環境の統合
+**現状のシンプルな構成を維持しつつ、テスト実行環境のみを統合**
+- 既存のdocker-compose.ymlベース
+- Playwrightテストのコンテナ実行
+- 最小限の設定変更
 
-#### Phase 2.1: docker-compose.yml作成
+#### Phase 2.1: 現状維持 + テストサービス追加
+
+**既存のdocker-compose.ymlに最小限の追加のみ**
 
 ```yaml
-version: '3.8'
-
+# 既存のservices.appはそのまま維持
 services:
-  # Development server
-  metacrawlable-dev:
-    build:
-      context: .
-      target: development
+  app:
+    build: .
     ports:
       - "3000:3000"
     volumes:
       - .:/app
       - /app/node_modules
-      - /app/.next
     environment:
       - NODE_ENV=development
-    command: npm run dev
 
-  # Production-like testing
-  metacrawlable-prod:
-    build:
-      context: .
-      target: runner
-    ports:
-      - "3001:3000"
-    environment:
-      - NODE_ENV=production
-
-  # Test runner service
-  test-runner:
-    build: .
+  # テスト実行用サービスのみ追加
+  playwright-test:
+    image: mcr.microsoft.com/playwright:v1.53.0-focal
     depends_on:
-      - metacrawlable-prod
-    command: npm run test
+      - app
     volumes:
-      - ./tests:/app/tests
+      - ./tests:/workspace/tests
+      - ./playwright.config.ts:/workspace/playwright.config.ts
+      - ./package.json:/workspace/package.json
+    working_dir: /workspace
+    command: |
+      sh -c "
+        npm install @playwright/test &&
+        npx playwright test --base-url=http://app:3000
+      "
     environment:
-      - TEST_BASE_URL=http://metacrawlable-prod:3000
-
-networks:
-  default:
-    name: metacrawlable-network
+      - CI=true
 ```
 
-#### Phase 2.2: 開発用Dockerfileの追加
+#### Phase 2.2: テスト実行コマンドの追加
 
-```dockerfile
-# Development stage (add to main Dockerfile)
-FROM base AS development
-COPY package*.json ./
-RUN npm ci
-COPY . .
-EXPOSE 3000
-CMD ["npm", "run", "dev"]
+**package.jsonに追加（既存のテストスクリプトを活用）**
+
+```json
+{
+  "scripts": {
+    "test:docker": "docker-compose run --rm playwright-test",
+    "test:docker:static": "docker-compose run --rm playwright-test npx playwright test --project=static-land",
+    "test:docker:all": "docker-compose up -d app && docker-compose run --rm playwright-test && docker-compose down"
+  }
+}
 ```
 
-#### Phase 2.3: テスト統合の検討
+#### Phase 2.3: 実行方法
 
 ```bash
-# Playwrightのコンテナ実行
-docker run --rm \
-  --network metacrawlable-network \
-  -v $(pwd)/tests:/app/tests \
-  -e TEST_BASE_URL=http://metacrawlable-prod:3000 \
-  playwright-test:latest
+# 開発サーバー起動（従来通り）
+docker-compose up app
+
+# テスト実行（新機能）
+npm run test:docker:all
+
+# 個別テスト実行
+npm run test:docker:static
 ```
 
 ### Phase 3: 本格運用

@@ -21,7 +21,7 @@ services:
     volumes:
       - ./tests:/app/tests
     working_dir: /app
-    command: sh -c "BASE_URL=http://app:3000 npx playwright test --workers=4"
     environment:
       - CI=true
       - PLAYWRIGHT_WORKERS=4
+      - BASE_URL=http://app:3000

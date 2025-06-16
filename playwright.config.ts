@@ -15,15 +15,12 @@ const getOutputDir = () => {
   return projectDirs[project] || `./test-results/${timestamp}/`;
 };
 
-const workers = process.env.PLAYWRIGHT_WORKERS ? parseInt(process.env.PLAYWRIGHT_WORKERS) : (process.env.CI ? 4 : undefined);
-console.log(`[CONFIG] Using ${workers} workers (PLAYWRIGHT_WORKERS: ${process.env.PLAYWRIGHT_WORKERS}, CI: ${process.env.CI})`);
-
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: workers,
+  workers: process.env.PLAYWRIGHT_WORKERS ? parseInt(process.env.PLAYWRIGHT_WORKERS) : undefined,
   reporter: [
     ['html', { outputFolder: `${getOutputDir()}reports/html` }],
     ['json', { outputFile: `${getOutputDir()}reports/results.json` }]

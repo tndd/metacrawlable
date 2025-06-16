@@ -2,25 +2,12 @@
 
 import { useEffect, useState } from 'react'
 
-export async function generateStaticParams() {
-  return Array.from({ length: 25 }, (_, i) => ({
-    id: (i + 1).toString()
-  }))
-}
-
-export default function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
+export default function ProfilePage({ params }: { params: { id: string } }) {
   const [profile, setProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [relatedProfiles, setRelatedProfiles] = useState<any[]>([])
   
-  // Extract id from params
-  const [id, setId] = useState<string>('')
-  
-  useEffect(() => {
-    params.then(({ id: paramId }) => {
-      setId(paramId)
-    })
-  }, [params])
+  const { id } = params
   
   useEffect(() => {
     if (!id) return
@@ -69,21 +56,43 @@ export default function ProfilePage({ params }: { params: Promise<{ id: string }
       })
       
       // Generate related profiles (JavaScript-only discovery)
-      const related = []
-      for (let i = 0; i < 4; i++) {
-        let relatedId = profileId + i - 1
-        if (relatedId <= 0) relatedId = profileId + i + 1
-        if (relatedId > 25) relatedId = profileId - i - 1
-        if (relatedId !== profileId && relatedId >= 1 && relatedId <= 25) {
-          related.push({
-            id: relatedId,
-            name: `User ${relatedId}`,
-            title: profileTypes[relatedId % 5],
-            url: `/client-only/profile/${relatedId}`
+      const related = new Set()
+      const relatedList = []
+      
+      // Generate unique related profile IDs
+      for (let i = 1; i <= 25; i++) {
+        if (i !== profileId && relatedList.length < 3) {
+          // Prefer nearby profiles but avoid duplicates
+          const distance = Math.abs(i - profileId)
+          if (distance <= 3 || Math.random() > 0.7) {
+            if (!related.has(i)) {
+              related.add(i)
+              relatedList.push({
+                id: i,
+                name: `User ${i}`,
+                title: profileTypes[i % 5],
+                url: `/client-only/profile/${i}`
+              })
+            }
+          }
+        }
+      }
+      
+      // Fill remaining slots if needed
+      while (relatedList.length < 3) {
+        const randomId = Math.floor(Math.random() * 25) + 1
+        if (randomId !== profileId && !related.has(randomId)) {
+          related.add(randomId)
+          relatedList.push({
+            id: randomId,
+            name: `User ${randomId}`,
+            title: profileTypes[randomId % 5],
+            url: `/client-only/profile/${randomId}`
           })
         }
       }
-      setRelatedProfiles(related.slice(0, 3))
+      
+      setRelatedProfiles(relatedList)
       
       setLoading(false)
     }, 150) // API取得をシミュレート

@@ -18,10 +18,11 @@ services:
       target: test
     depends_on:
       - app
+    network_mode: "host"
     volumes:
       - ./tests:/app/tests
     working_dir: /app
     environment:
       - CI=true
       - PLAYWRIGHT_WORKERS=4
-      - BASE_URL=http://app:3000
+      - BASE_URL=http://localhost:3000

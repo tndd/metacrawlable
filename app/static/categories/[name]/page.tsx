@@ -66,7 +66,7 @@ const categories = {
 }
 
 interface PageProps {
-  params: { name: string }
+  params: Promise<{ name: string }>
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

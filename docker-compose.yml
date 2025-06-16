@@ -1,0 +1,126 @@
+version: '3.8'
+
+services:
+  # Development server with hot reload
+  metacrawlable-dev:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    command: npm run dev
+    networks:
+      - metacrawlable-network
+
+  # Production-like testing environment
+  metacrawlable-prod:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - metacrawlable-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/static"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Test runner service
+  test-runner:
+    build:
+      context: .
+      target: test
+    depends_on:
+      metacrawlable-prod:
+        condition: service_healthy
+    volumes:
+      - ./tests:/app/tests
+      - ./playwright-report:/app/playwright-report
+      - ./test-results:/app/test-results
+    environment:
+      - CI=true
+      - TEST_BASE_URL=http://metacrawlable-prod:3000
+    command: npm run test
+    networks:
+      - metacrawlable-network
+
+  # Individual test services for each site
+  test-static:
+    build:
+      context: .
+      target: test
+    depends_on:
+      metacrawlable-prod:
+        condition: service_healthy
+    volumes:
+      - ./tests:/app/tests
+    environment:
+      - TEST_BASE_URL=http://metacrawlable-prod:3000
+    command: npm run test:static
+    networks:
+      - metacrawlable-network
+
+  test-dynamic:
+    build:
+      context: .
+      target: test
+    depends_on:
+      metacrawlable-prod:
+        condition: service_healthy
+    volumes:
+      - ./tests:/app/tests
+    environment:
+      - TEST_BASE_URL=http://metacrawlable-prod:3000
+    command: npm run test:dynamic
+    networks:
+      - metacrawlable-network
+
+  test-client:
+    build:
+      context: .
+      target: test
+    depends_on:
+      metacrawlable-prod:
+        condition: service_healthy
+    volumes:
+      - ./tests:/app/tests
+    environment:
+      - TEST_BASE_URL=http://metacrawlable-prod:3000
+    command: npm run test:client
+    networks:
+      - metacrawlable-network
+
+  test-antibot:
+    build:
+      context: .
+      target: test
+    depends_on:
+      metacrawlable-prod:
+        condition: service_healthy
+    volumes:
+      - ./tests:/app/tests
+    environment:
+      - TEST_BASE_URL=http://metacrawlable-prod:3000
+    command: npm run test:antibot
+    networks:
+      - metacrawlable-network
+
+networks:
+  metacrawlable-network:
+    driver: bridge
+
+volumes:
+  node_modules:
+  next_cache:

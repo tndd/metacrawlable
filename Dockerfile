@@ -2,7 +2,7 @@
 FROM node:18-alpine AS base
 
 # Install dependencies only when needed
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat wget
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
@@ -11,6 +11,28 @@ RUN \
   if [ -f package-lock.json ]; then npm ci --only=production; \
   else echo "Lockfile not found." && exit 1; \
   fi
+
+# Development stage
+FROM node:18-alpine AS development
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
+COPY . .
+EXPOSE 3000
+ENV NODE_ENV=development
+CMD ["npm", "run", "dev"]
+
+# Test stage with Playwright
+FROM mcr.microsoft.com/playwright:v1.53.0-focal AS test
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
+COPY . .
+# Install Playwright browsers
+RUN npx playwright install
+EXPOSE 3000
+CMD ["npm", "run", "test"]
 
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder

@@ -18,11 +18,11 @@ services:
       - metacrawlable-network
     container_name: metacrawlable-app
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/static', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
-      interval: 5s
-      timeout: 10s
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 30s
 
   # テスト実行用サービス
   playwright-test:

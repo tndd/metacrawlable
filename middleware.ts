@@ -41,5 +41,8 @@ function isBotUserAgent(userAgent: string): boolean {
 }
 
 export const config = {
-  matcher: '/anti-bot/:path*'
+  matcher: [
+    '/anti-bot/:path*',
+    '/anti-bot'
+  ]
 }

@@ -10,8 +10,6 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
-      - DEV_HOST=localhost
-      - DEV_PORT=3000
 
   # テスト実行用サービス
   playwright-test:
@@ -27,5 +25,3 @@ services:
     environment:
       - CI=true
       - PLAYWRIGHT_WORKERS=4
-      - DEV_HOST=localhost
-      - DEV_PORT=3000

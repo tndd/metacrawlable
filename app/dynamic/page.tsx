@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Dynamic Maze - Home',
+  description: 'Dynamic layout testing environment for web crawlers',
+}
+
 export default function DynamicPage() {
   const layoutVariant = Math.floor(Math.random() * 3) + 1
   const sectionOrder = ['news', 'featured', 'trending'].sort(() => Math.random() - 0.5)

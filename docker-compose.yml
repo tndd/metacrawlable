@@ -11,18 +11,14 @@ services:
 
   # テスト実行用サービス
   playwright-test:
-    image: mcr.microsoft.com/playwright:v1.53.0-focal
+    build:
+      context: .
+      dockerfile: Dockerfile.playwright
     depends_on:
       - app
     volumes:
-      - ./tests:/workspace/tests
-      - ./playwright.config.ts:/workspace/playwright.config.ts
-      - ./package.json:/workspace/package.json
-    working_dir: /workspace
-    command: |
-      sh -c "
-        npm install @playwright/test &&
-        npx playwright test --base-url=http://app:3000
-      "
+      - ./tests:/app/tests
+    working_dir: /app
+    command: sh -c "BASE_URL=http://app:3000 npx playwright test"
     environment:
       - CI=true

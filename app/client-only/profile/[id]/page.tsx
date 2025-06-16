@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, use } from 'react'
 
-export default function ProfilePage({ params }: { params: { id: string } }) {
+export default function ProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const [profile, setProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [relatedProfiles, setRelatedProfiles] = useState<any[]>([])
   
-  const { id } = params
+  const { id } = use(params)
   
   useEffect(() => {
     if (!id) return

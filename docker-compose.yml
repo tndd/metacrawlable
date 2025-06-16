@@ -8,3 +8,21 @@ services:
       - /app/node_modules
     environment:
       - NODE_ENV=development
+
+  # テスト実行用サービス
+  playwright-test:
+    image: mcr.microsoft.com/playwright:v1.53.0-focal
+    depends_on:
+      - app
+    volumes:
+      - ./tests:/workspace/tests
+      - ./playwright.config.ts:/workspace/playwright.config.ts
+      - ./package.json:/workspace/package.json
+    working_dir: /workspace
+    command: |
+      sh -c "
+        npm install @playwright/test &&
+        npx playwright test --base-url=http://app:3000
+      "
+    environment:
+      - CI=true

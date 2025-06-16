@@ -79,11 +79,20 @@ test.describe('BotWarden Pages', () => {
     await context.close();
   });
 
-  test('empty user agent gets blocked with 403', async ({ browser }) => {
-    // Skip this test as Playwright cannot properly simulate empty User-Agent
-    // The middleware works correctly as verified by curl testing
-    // This is a limitation of the testing framework, not the implementation
-    test.skip(true, 'Playwright cannot simulate empty User-Agent for middleware detection');
+  test('minimal user agent gets blocked with 403', async ({ browser }) => {
+    // Test with a very minimal user agent that contains 'bot' pattern
+    const context = await browser.newContext({
+      userAgent: 'bot'
+    });
+    const page = await context.newPage();
+
+    const response = await page.goto('/anti-bot', { waitUntil: 'domcontentloaded' });
+    expect(response?.status()).toBe(403);
+    
+    await expect(page.locator('h1')).toContainText('Access Denied');
+    await expect(page.getByText('Automated access detected')).toBeVisible();
+    
+    await context.close();
   });
 
   // Test specific bot detection patterns

@@ -24,4 +24,3 @@ services:
     command: sh -c "BASE_URL=http://app:3000 ${OVERRIDE_COMMAND:-npx playwright test --workers=4}"
     environment:
       - CI=true
-      - PLAYWRIGHT_WORKERS=4

@@ -37,25 +37,24 @@ export default defineConfig({
       outputDir: `${getOutputDir()}artifacts/`,
       use: { ...devices['Desktop Chrome'] },
     },
-    // Future projects for other sites:
-    // {
-    //   name: 'dynamic-maze',
-    //   testDir: './tests/dynamic',
-    //   outputDir: `./tests/dynamic/result/${timestamp}/`,
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
-    // {
-    //   name: 'client-shadow',
-    //   testDir: './tests/client-only',
-    //   outputDir: `./tests/client-only/result/${timestamp}/`,
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
-    // {
-    //   name: 'bot-warden',
-    //   testDir: './tests/anti-bot',
-    //   outputDir: `./tests/anti-bot/result/${timestamp}/`,
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'dynamic-maze',
+      testDir: './tests/dynamic',
+      outputDir: `${getOutputDir()}artifacts/`,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'client-shadow',
+      testDir: './tests/client-only',
+      outputDir: `${getOutputDir()}artifacts/`,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'bot-warden',
+      testDir: './tests/anti-bot',
+      outputDir: `${getOutputDir()}artifacts/`,
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
   webServer: {
     command: 'npm run dev',

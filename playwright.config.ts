@@ -43,12 +43,12 @@ export default defineConfig({
       outputDir: `${getOutputDir()}artifacts/`,
       use: { ...devices['Desktop Chrome'] },
     },
-    // {
-    //   name: 'client-shadow',
-    //   testDir: './tests/client-only',
-    //   outputDir: `./tests/client-only/result/${timestamp}/`,
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'client-shadow',
+      testDir: './tests/client-only',
+      outputDir: `${getOutputDir()}artifacts/`,
+      use: { ...devices['Desktop Chrome'] },
+    },
     // {
     //   name: 'bot-warden',
     //   testDir: './tests/anti-bot',

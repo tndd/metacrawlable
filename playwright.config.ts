@@ -37,13 +37,12 @@ export default defineConfig({
       outputDir: `${getOutputDir()}artifacts/`,
       use: { ...devices['Desktop Chrome'] },
     },
-    // Future projects for other sites:
-    // {
-    //   name: 'dynamic-maze',
-    //   testDir: './tests/dynamic',
-    //   outputDir: `./tests/dynamic/result/${timestamp}/`,
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'dynamic-maze',
+      testDir: './tests/dynamic',
+      outputDir: `${getOutputDir()}artifacts/`,
+      use: { ...devices['Desktop Chrome'] },
+    },
     // {
     //   name: 'client-shadow',
     //   testDir: './tests/client-only',

@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Dynamic Maze - Random Structure',
+  description: 'Completely randomized content structure for advanced crawler testing',
+}
+
 export default function RandomPage() {
   const randomElements = Math.floor(Math.random() * 15) + 5
   const layoutComplexity = Math.floor(Math.random() * 5) + 1
@@ -322,7 +327,7 @@ export default function RandomPage() {
                   <p>🎨 Gradient: Variant {gradientVariant}</p>
                   <p>🧩 Complexity: Level {layoutComplexity}</p>
                   <p>📏 Depth: {nestedDepth} levels</p>
-                  <p>🔑 Hash: {Math.random().toString(36).substr(2, 9)}</p>
+                  <p>🔑 Hash: {Math.random().toString(36).substring(2, 11)}</p>
                 </div>
               </div>
             </div>

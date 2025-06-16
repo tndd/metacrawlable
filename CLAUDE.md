@@ -99,6 +99,15 @@ middleware.ts                   # BotWarden User-Agent detection only
 - **No assumptions or modifications** - specifications are implementation-ready
 - **Page count requirements**: StaticLand(37) + DynamicMaze(22) + ClientShadow(27) + BotWarden(3) = 89 pages total
 
+### Containerization Guidelines
+
+- **Follow containerization-guide.md** - 3-phase Docker implementation approach
+- **Phase 1**: Basic containerization with multi-stage build
+- **Phase 2**: Development environment with docker-compose
+- **Phase 3**: Production optimization and CI/CD integration
+- **Next.js configuration**: Use `output: 'standalone'` for optimal container support
+- **Testing integration**: Playwright tests should run in containerized environment
+
 ### Testing Validation
 
 Each site tests specific crawler capabilities:

@@ -25,6 +25,7 @@ Next.js App Routerで実装する、実装可能で一貫したクローラー�
 - **[実装ガイド](docs/implementation-guide.md)** - 完全なコード例と手順
 - **[アンチクローラー機構](docs/anti-crawler.md)** - 各サイトのテスト戦略
 - **[Sitemap/Robots.txt設定](docs/sitemap-robots.md)** - 統合配信仕様
+- **[コンテナ化ガイド](docs/containerization-guide.md)** - Docker実装の段階的手順
 
 ### サイト別仕様
 - **[StaticLand仕様](docs/sites/static-land.md)** - セマンティックHTML + メタデータ

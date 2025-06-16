@@ -49,12 +49,12 @@ export default defineConfig({
       outputDir: `${getOutputDir()}artifacts/`,
       use: { ...devices['Desktop Chrome'] },
     },
-    // {
-    //   name: 'bot-warden',
-    //   testDir: './tests/anti-bot',
-    //   outputDir: `./tests/anti-bot/result/${timestamp}/`,
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'bot-warden',
+      testDir: './tests/anti-bot',
+      outputDir: `${getOutputDir()}artifacts/`,
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
   webServer: {
     command: 'npm run dev',

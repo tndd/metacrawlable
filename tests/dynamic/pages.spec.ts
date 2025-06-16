@@ -81,12 +81,14 @@ test.describe('DynamicMaze Pages', () => {
     
     // At least one load should be different (with high probability)
     // This test may occasionally fail due to randomness, but should usually pass
-    const uniqueLayouts = new Set(layouts);
-    const uniqueGradients = new Set(gradients);
     
     // We expect some variation in 3 loads (not guaranteed but very likely)
     expect(layouts.length).toBe(3);
     expect(gradients.length).toBe(3);
+    
+    // Check that we got valid layout and gradient values
+    expect(layouts.every(layout => ['1', '2', '3'].includes(layout))).toBe(true);
+    expect(gradients.every(gradient => ['1', '2', '3'].includes(gradient))).toBe(true);
   });
 
   test('all pages return 200 status', async ({ page }) => {

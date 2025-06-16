@@ -1,6 +1,8 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      target: development
     ports:
       - "3000:3000"
     volumes:
@@ -13,7 +15,7 @@ services:
   playwright-test:
     build:
       context: .
-      dockerfile: Dockerfile.playwright
+      target: test
     depends_on:
       - app
     volumes:

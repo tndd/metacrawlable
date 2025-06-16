@@ -17,6 +17,12 @@ services:
     networks:
       - metacrawlable-network
     container_name: metacrawlable-app
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/static', (res) => process.exit(res.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   # テスト実行用サービス
   playwright-test:
@@ -25,13 +31,15 @@ services:
       target: test
     depends_on:
       app:
-        condition: service_started
+        condition: service_healthy
     volumes:
       - ./tests:/app/tests
     working_dir: /app
     environment:
       - CI=true
-      - PLAYWRIGHT_WORKERS=4
+      - PLAYWRIGHT_WORKERS=2
       - BASE_URL=http://metacrawlable-app:3000
     networks:
       - metacrawlable-network
+    mem_limit: 2g
+    shm_size: 1g

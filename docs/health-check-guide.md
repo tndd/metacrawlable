@@ -133,6 +133,46 @@ healthcheck:
 - JSON形式での構造化データ
 - デバッグ情報の充実
 
+## 🧪 テストコマンド
+
+### Docker環境でのPlaywrightテスト
+
+```bash
+# 全テスト実行
+npm run test:docker:all
+
+# 個別サイトテスト
+npm run test:docker:static    # StaticLand (6 tests)
+npm run test:docker:dynamic   # DynamicMaze (6 tests)  
+npm run test:docker:client    # ClientShadow (15 tests)
+npm run test:docker:antibot   # BotWarden (14 tests)
+
+# ローカル環境テスト（比較用）
+npm run test:static
+npm run test:dynamic
+npm run test:client
+npm run test:antibot
+```
+
+### テスト結果例
+
+```bash
+# npm run test:docker:dynamic
+Running 6 tests using 2 workers
+······
+6 passed (9.1s)
+
+# npm run test:docker:client  
+Running 15 tests using 2 workers
+···············
+15 passed (19.5s)
+
+# npm run test:docker:antibot
+Running 14 tests using 2 workers
+··············  
+14 passed (11.4s)
+```
+
 ## 📊 使用例
 
 ### 開発時のヘルスチェック確認

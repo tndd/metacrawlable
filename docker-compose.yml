@@ -1,0 +1,45 @@
+networks:
+  metacrawlable-network:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    networks:
+      - metacrawlable-network
+    container_name: metacrawlable-app
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  # テスト実行用サービス
+  playwright-test:
+    build:
+      context: .
+      target: test
+    depends_on:
+      app:
+        condition: service_healthy
+    volumes:
+      - ./tests:/app/tests
+    working_dir: /app
+    environment:
+      - CI=true
+      - PLAYWRIGHT_WORKERS=2
+      - BASE_URL=http://metacrawlable-app:3000
+    networks:
+      - metacrawlable-network
+    mem_limit: 2g
+    shm_size: 1g

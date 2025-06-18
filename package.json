@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "test": "playwright test",
+    "test:playwright": "playwright test --reporter=html",
     "test:static": "PLAYWRIGHT_PROJECT=static-land playwright test --project=static-land",
     "test:dynamic": "PLAYWRIGHT_PROJECT=dynamic-maze playwright test --project=dynamic-maze",
     "test:client": "PLAYWRIGHT_PROJECT=client-shadow playwright test --project=client-shadow",
@@ -19,7 +21,14 @@
     "test:docker:dynamic": "docker-compose run --rm playwright-test npx playwright test --project=dynamic-maze",
     "test:docker:client": "docker-compose run --rm playwright-test npx playwright test --project=client-shadow",
     "test:docker:antibot": "docker-compose run --rm playwright-test npx playwright test --project=bot-warden",
-    "test:docker:all": "docker-compose up -d app && docker-compose run --rm playwright-test && docker-compose down"
+    "test:docker:all": "docker-compose up -d app && docker-compose run --rm playwright-test && docker-compose down",
+    "ci:test": "npm run typecheck && npm run lint && npm run build && npm run test:playwright",
+    "ci:docker-test": "docker-compose up -d && npm run test:docker:all",
+    "ci:full": "npm run ci:test && npm run ci:docker-test",
+    "ci:security": "npm audit --audit-level=moderate",
+    "ci:build-production": "docker build --target production -t metacrawlable:local .",
+    "ci:test-production": "docker run --rm -d --name test-local -p 3000:3000 metacrawlable:local && sleep 10 && curl -f http://localhost:3000/api/health && docker stop test-local",
+    "health-check": "curl -f http://localhost:3000/api/health || exit 1"
   },
   "dependencies": {
     "next": "15.3.3",
@@ -31,9 +40,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "tailwindcss": "^3.4.0",
     "autoprefixer": "^10.4.0",
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^15.3.3",
     "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
     "typescript": "^5"
   }
 }

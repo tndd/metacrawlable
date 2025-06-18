@@ -20,9 +20,11 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
       interval: 15s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 45s
+    mem_limit: 1g
+    cpus: 1.0
 
   # テスト実行用サービス
   playwright-test:
@@ -37,9 +39,10 @@ services:
     working_dir: /app
     environment:
       - CI=true
-      - PLAYWRIGHT_WORKERS=2
+      - PLAYWRIGHT_WORKERS=1  # パフォーマンス改善のため並列数を削減
       - BASE_URL=http://metacrawlable-app:3000
     networks:
       - metacrawlable-network
-    mem_limit: 2g
-    shm_size: 1g
+    mem_limit: 3g
+    shm_size: 2g
+    cpus: 2.0

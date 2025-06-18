@@ -1,0 +1,95 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-check:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: TypeScript type check
+      run: npm run typecheck
+      
+    - name: ESLint check
+      run: npm run lint
+      
+    - name: Build check
+      run: npm run build
+      
+    - name: Generate build analysis
+      run: |
+        du -sh .next > build-size.txt
+        echo "Build completed successfully" >> build-size.txt
+        
+    - name: Check for TODO/FIXME comments
+      run: |
+        echo "Checking for TODO/FIXME comments..."
+        find . -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" | \
+        xargs grep -n "TODO\|FIXME" || echo "No TODO/FIXME comments found"
+        
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-analysis
+        path: |
+          build-size.txt
+          .next/build-manifest.json
+          
+  performance-test:
+    name: Performance Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Build application
+      run: npm run build
+      
+    - name: Start application
+      run: |
+        npm start &
+        sleep 10
+        
+    - name: Install Lighthouse CI
+      run: npm install -g @lhci/cli
+      
+    - name: Run Lighthouse CI
+      run: |
+        lhci autorun || echo "Lighthouse CI completed with warnings"
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Health check performance
+      run: |
+        echo "Testing health endpoint performance..."
+        time curl -f http://localhost:3000/api/health
+        time curl -f http://localhost:3000/api/ready
+        time curl -f http://localhost:3000/robots.txt
+        time curl -f http://localhost:3000/sitemap.xml

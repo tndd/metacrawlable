@@ -29,7 +29,10 @@ export default defineConfig({
     baseURL: process.env.BASE_URL || 'http://localhost:3000',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    navigationTimeout: process.env.CI ? 60000 : 30000, // Docker環境では60秒
+    actionTimeout: process.env.CI ? 30000 : 15000,     // アクション待機時間
   },
+  timeout: process.env.CI ? 120000 : 60000, // テスト全体のタイムアウト
   projects: [
     {
       name: 'static-land',

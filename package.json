@@ -24,6 +24,10 @@
     "test:docker:all": "docker-compose up -d app && docker-compose run --rm playwright-test && docker-compose down",
     "ci:test": "npm run typecheck && npm run lint && npm run build && npm run test:playwright",
     "ci:docker-test": "docker-compose up -d && npm run test:docker:all",
+    "ci:full": "npm run ci:test && npm run ci:docker-test",
+    "ci:security": "npm audit --audit-level=moderate",
+    "ci:build-production": "docker build --target production -t metacrawlable:local .",
+    "ci:test-production": "docker run --rm -d --name test-local -p 3000:3000 metacrawlable:local && sleep 10 && curl -f http://localhost:3000/api/health && docker stop test-local",
     "health-check": "curl -f http://localhost:3000/api/health || exit 1"
   },
   "dependencies": {
